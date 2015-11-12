@@ -39,3 +39,4 @@ For window:
 
 You can add issue [here](https://github.com/HsuTing/json2geojson/issues).
 
+- now, this only can transform point in geojson.
