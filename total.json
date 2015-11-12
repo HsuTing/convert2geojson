@@ -1,0 +1,7 @@
+[
+  {
+    "input": "test",
+    "symbols": [ "VillageLon", "VillageLat" ],
+    "output": "geojosn"
+  }
+]
