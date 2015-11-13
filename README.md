@@ -20,6 +20,7 @@ For window:
 ## Simple map
 
 - modify `file.config` and jsut open `index.html`.
+- You can see [here](https://github.com/HsuTing/json2geojson#fileconfig-example).
 
 ## json2geojson.config example
 

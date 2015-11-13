@@ -4,3 +4,4 @@ output/*.geojson
 input/*.json
 *.pyc
 node_modules
+*.swp
