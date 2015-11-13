@@ -45,8 +45,8 @@ If you wnat to rename file name, you can do this.
 ```
 {
   "config": {
-    "input": "input",
-    "output": "output"
+    "input": "input_folder_name",
+    "output": "output_folder_name"
   },  
   "files": [
     {   
