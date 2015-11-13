@@ -1,125 +1,46 @@
-#json2geojson
+# Convert to Geojson
 
-## Requirement
+## Start
 
-- python
+- You need to install [Node.js](https://nodejs.org/en/).
 
-## Use
-
-For Max or ubuntu:
+- Install node modules.
 
 ```
-  python json2geojson.py
+  npm install -i
 ```
-- You can use many file if you want.
 
-For window:
-
-- Click `json2geojson.py`.
-
-## Simple map
-
-- modify `file.config` and jsut open `index.html`.
-- You can see [here](https://github.com/HsuTing/json2geojson#fileconfig-example).
-
-## json2geojson.config example
-
-You can add many files in files, and input is input folder, output is output folder.
+- Use webpack.
 
 ```
-{
-  "config": {
-    "input": "input_folder_name",
-    "output": "output_folder_name"
+  ./node_modules/.bin/webpack
+```
+
+## Config example
+
+- File name must be `convert2geojson.config.js`
+
+```
+module.exports = { 
+  input: [
+    {'try': { url: './input/test.json', lon: 'VillageLon', lat: 'VillageLat'}}
+  ],  
+  output: {
+    filename: '[name].json',
+    path: './output/'
   },  
-  "files": [
-    {   
-      "input": "test",
-      "symbols": [ "Lon", "Lat" ]
-    },
-    {   
-      "input": "test2",
-      "symbols": [ "Lon", "Lat" ]
-    }
+  center: {
+    lat: 23.619, 
+    lon: 120.795,
+    zoom: 8
+  },  
+  simple: [
+    'try'
   ]
 }
 ```
-
-If you wnat to rename file`s name, you can do this.
-
-```
-{
-  "config": {
-    "input": "input_folder_name",
-    "output": "output_folder_name"
-  },  
-  "files": [
-    {   
-      "input": "test",
-      "symbols": [ "Lon", "Lat" ],
-      "output": "testoutput"
-    }
-  ]
-}
-```
-
-If you need to change output`s file extension, you can do this.
-
-```
-{
-  "config": {
-    "input": "input_folder_name",
-    "output": "output_folder_name",
-    "fileExtension": "geojson"
-  },  
-  "files": [
-    {   
-      "input": "test",
-      "symbols": [ "Lon", "Lat" ],
-      "output": "testoutput"
-    }
-  ]
-}
-```
-
-## json2geojson.config field Explanation
-
-- `input` in `config` -> input folder`s name
-- `output` in `config` -> output folder`s name
-- `fileExtension` in `config` -> output file`s file extension
-- `input` in `files` -> input file`s name
-- `symbols` in `files` -> let program know which field in input files is `Lon` or `Lat`
-- `output` in `files` -> output file`s name
-
-## file.config example
-
-Files need to be geojson file.
-
-```
-{
-  "path": "output",
-  "center": {
-    "lat": 23.619, 
-    "lon": 120.795
-  },  
-  "files": [
-    "try.json"
-  ]
-}
-```
-
-## file.config field Explanation
-
-- `path` -> file in which folder
-- `center` -> map center
-- `files` -> files`s name
-
-## Development environment
-
-- Mac OS X 10.11
 
 ## Issue
 
-You can add issue [here](https://github.com/HsuTing/json2geojson/issues).
-
-- Now, this program only can transform points in json to points in geojson.
+- Now, this program just can transform `json` to `geojson`.
+- Only point in `json` can be transform.
