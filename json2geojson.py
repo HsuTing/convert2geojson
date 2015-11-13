@@ -7,6 +7,10 @@ with open("config.json") as fconfig:
   config = json.load(fconfig)
   inputPath = config["config"]["input"]
   outputPath = config["config"]["output"]
+  if "fileExtension" in config["config"].keys():
+    fileExtension = config["config"]["fileExtension"]
+  else:
+    fileExtension = "json"
 
   for i in range(0, len(config["files"])):
     symbols = config["files"][i]["symbols"]
@@ -39,7 +43,7 @@ with open("config.json") as fconfig:
         template["properties"] = line
         basic["features"].append(template)
 
-        with open(os.path.join(outputPath, outputFile + '.json'), 'w+') as fout:
+        with open(os.path.join(outputPath, outputFile + '.' + fileExtension), 'w+') as fout:
           data = json.dumps(basic, ensure_ascii=False, encoding='utf-8')
           fout.write(data.encode('utf-8'))
         fout.close()
