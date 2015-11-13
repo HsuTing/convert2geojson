@@ -9,26 +9,53 @@
 For Max or ubuntu:
 
 ```
-  python json2geojson.py (filename)
+  python json2geojson.py
 ```
 - You can use many file if you want.
 
 For window:
 
-- Click json2geojson.bat
-- You must add you command in json2geojson.bat.
-- You can use notepad to edit json2geojson.bat.
+- Click `json2geojson.py`.
 
-## File example
+## Config example
+
+You can add many files in files, and input is input folder, output is output folder.
 
 ```
-[
-  {
-    "input": "json",
-    "symbols": [ "VillageLon", "VillageLat" ],
-    "output": "geojosn"
-  }
-]
+{
+  "config": {
+    "input": "input",
+    "output": "output"
+  },  
+  "files": [
+    {   
+      "input": "test",
+      "symbols": [ "VillageLon", "VillageLat" ]
+    },
+    {   
+      "input": "test2",
+      "symbols": [ "VillageLon", "VillageLat" ]
+    }
+  ]
+}
+```
+
+If you wnat to rename file name, you can do this.
+
+```
+{
+  "config": {
+    "input": "input",
+    "output": "output"
+  },  
+  "files": [
+    {   
+      "input": "test",
+      "symbols": [ "VillageLon", "VillageLat" ],
+      "output": "testoutput"
+    }
+  ]
+}
 ```
 
 ## Development environment
@@ -39,4 +66,4 @@ For window:
 
 You can add issue [here](https://github.com/HsuTing/json2geojson/issues).
 
-- now, this only can transform point in geojson.
+- Now, this program only can transform points in json to points in geojson.
