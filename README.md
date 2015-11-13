@@ -30,17 +30,17 @@ You can add many files in files, and input is input folder, output is output fol
   "files": [
     {   
       "input": "test",
-      "symbols": [ "VillageLon", "VillageLat" ]
+      "symbols": [ "Lon", "Lat" ]
     },
     {   
       "input": "test2",
-      "symbols": [ "VillageLon", "VillageLat" ]
+      "symbols": [ "Lon", "Lat" ]
     }
   ]
 }
 ```
 
-If you wnat to rename file name, you can do this.
+If you wnat to rename file`s name, you can do this.
 
 ```
 {
@@ -51,7 +51,7 @@ If you wnat to rename file name, you can do this.
   "files": [
     {   
       "input": "test",
-      "symbols": [ "VillageLon", "VillageLat" ],
+      "symbols": [ "Lon", "Lat" ],
       "output": "testoutput"
     }
   ]
@@ -70,12 +70,21 @@ If you need to change output`s file extension, you can do this.
   "files": [
     {   
       "input": "test",
-      "symbols": [ "VillageLon", "VillageLat" ],
+      "symbols": [ "Lon", "Lat" ],
       "output": "testoutput"
     }
   ]
 }
 ```
+
+## Config field Explanation
+
+- `input` in `config` -> input folder`s name
+- `output` in `config` -> output folder`s name
+- `fileExtension` in `config` -> output file`s file extension
+- `input` in `files` -> input file`s name
+- `symbols` in `files` -> let program know which field in input files is `Lon` or `Lat`
+- `output` in `files` -> output file`s name
 
 ## Development environment
 
