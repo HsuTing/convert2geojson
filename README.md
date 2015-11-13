@@ -24,8 +24,8 @@ You can add many files in files, and input is input folder, output is output fol
 ```
 {
   "config": {
-    "input": "input",
-    "output": "output"
+    "input": "input_folder_name",
+    "output": "output_folder_name"
   },  
   "files": [
     {   
