@@ -35,7 +35,7 @@ with open("config.json") as fconfig:
         }
 ### add value
         for symbol in symbols:
-          template["geometry"]["coordinates"].append(line[symbol])
+          template["geometry"]["coordinates"].append(float(line[symbol]))
         template["properties"] = line
         basic["features"].append(template)
 
