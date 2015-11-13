@@ -1,0 +1,10 @@
+{
+  "path": "output",
+  "center": {
+    "lat": 23.619, 
+    "lon": 120.795
+  },
+  "files": [
+    "try.json"
+  ]
+}

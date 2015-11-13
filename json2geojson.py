@@ -3,7 +3,7 @@ import json
 import sys
 import os
 
-with open("config.json") as fconfig:
+with open("json2geojson.config.json") as fconfig:
   config = json.load(fconfig)
   inputPath = config["config"]["input"]
   outputPath = config["config"]["output"]

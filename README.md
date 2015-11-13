@@ -17,7 +17,11 @@ For window:
 
 - Click `json2geojson.py`.
 
-## Config example
+## Simple map
+
+- modify `file.config` and jsut open `index.html`.
+
+## json2geojson.config example
 
 You can add many files in files, and input is input folder, output is output folder.
 
@@ -77,7 +81,7 @@ If you need to change output`s file extension, you can do this.
 }
 ```
 
-## Config field Explanation
+## json2geojson.config field Explanation
 
 - `input` in `config` -> input folder`s name
 - `output` in `config` -> output folder`s name
@@ -85,6 +89,29 @@ If you need to change output`s file extension, you can do this.
 - `input` in `files` -> input file`s name
 - `symbols` in `files` -> let program know which field in input files is `Lon` or `Lat`
 - `output` in `files` -> output file`s name
+
+## file.config example
+
+Files need to be geojson file.
+
+```
+{
+  "path": "output",
+  "center": {
+    "lat": 23.619, 
+    "lon": 120.795
+  },  
+  "files": [
+    "try.json"
+  ]
+}
+```
+
+## file.config field Explanation
+
+- `path` -> file in which folder
+- `center` -> map center
+- `files` -> files`s name
 
 ## Development environment
 
