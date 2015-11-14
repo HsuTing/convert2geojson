@@ -1,19 +1,11 @@
 # Convert to Geojson
 
-## Start
+## Install
 
 - You need to install [Node.js](https://nodejs.org/en/).
 
-- Install node modules.
-
 ```
-  npm install -i
-```
-
-- Use webpack.
-
-```
-  ./node_modules/.bin/webpack
+  npm install convert2geojson
 ```
 
 ## Config example

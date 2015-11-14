@@ -1,8 +1,10 @@
 'use strict';
 
+var path = require('path');
 var jsonProcessor = require('./Processor/json.jsx');
 
-module.exports = function(data, type, symbol) {
+module.exports = function(data, filename, symbol) {
+  var type = path.extname(filename).replace('.', '');
   var output = "";
 
   switch(type) {
