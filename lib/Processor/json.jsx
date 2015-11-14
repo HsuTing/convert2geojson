@@ -1,15 +1,15 @@
 'use strict';
 
-export default function(data, symbol) {
-  let output = {
+module.exports = function(data, symbol) {
+  var output = {
     "type": "FeatureCollection",
     "features": []
   };
 
-  for(let item_id in data) {
-    let item = data[item_id];
+  for(var item_id in data) {
+    var item = data[item_id];
 
-    let template = {
+    var template = {
       "type": "Feature",
       "geometry": {
         "type": "Point",
@@ -17,9 +17,8 @@ export default function(data, symbol) {
       },
       "properties": item
     };
-
     output.features.push(template);
   }
 
-  return output;
+  return JSON.stringify(output);
 }
