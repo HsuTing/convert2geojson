@@ -32,29 +32,29 @@ module.exports = {
 ```
 ## Config field explanation
 
-input:
-- You can add many file in here.
-- `url` can be a path or a link.
-- Format:
+- [ ] input:
+  - You can add many file in here.
+  - `url` can be a path or a link.
+  - Format:
 ```
   { (output filename): { url: (input file url), lon: (lon), lat: (lat)}}
 ```
 
-filename:
-- `[name]` is stable. Do not change it.
-- Format:
+- [ ] filename:
+  - `[name]` is stable. Do not change it.
+  - Format:
 ```
 [name].(file extension)
 ```
 
-path:
-- Output files will be put in this folder.
+- [ ] path:
+  - Output files will be put in this folder.
 
-center:
-- [x] Sample map`s center and the level of zoom in.
+- [x] center:
+  - Sample map`s center and the level of zoom in.
 
-simpe:
-- [x] Files should be included in simple map.
+- [x] simpe:
+  - Files should be included in simple map.
 
 ## Issue
 
