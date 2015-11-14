@@ -1,10 +1,10 @@
 {
   "name": "convert2geojson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "convert2geojson",
   "main": "index.js",
   "bin": {
-    "convert2geojson": "convert2geojson.js"
+    "convert2geojson": "./bin/convert2geojson.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +17,7 @@
     "convert2geojson"
   ],
   "author": "HsuTing",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/HsuTing/convert2geojson/issues"
   },

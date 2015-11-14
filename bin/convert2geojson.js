@@ -12,8 +12,8 @@ var fs = require('fs');
 var root = path.resolve(__filename, '..', '..', '..', '..');
 var Config = require(path.join(root, 'convert2geojson.config.js'));
 
-var Input = require('./../lib/Input.jsx');
-var Output = require('./../lib/Output.jsx');
+var Input = require('./../lib/Input.js');
+var Output = require('./../lib/Output.js');
 
 for(var file_id in Config.input) {
   var file = Config.input[file_id];
