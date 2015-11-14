@@ -3,35 +3,51 @@
 var path = require('path');
 try {
   var local = require.resolve(path.join(process.cwd(), "node_modules", "convert2geojson", "bin", "convert2geojson.js"));
-  if(__filename !== localWebpack) {
-    return require(localWebpack);
+  if(__filename !== local) {
+    return require(local);
   }   
-} catch(e) {}
+} catch(e) {};
 
-var fs = require('fs');
+var colors = require('colors');
+var url = require('url');
 var root = path.resolve(__filename, '..', '..', '..', '..');
 var Config = require(path.join(root, 'convert2geojson.config.js'));
+var convert2geojson = require('./../convert2geojson.js')
+var Input = convert2geojson.Input;
+var Output = convert2geojson.Output;
 
-var Input = require('./../lib/Input.js');
-var Output = require('./../lib/Output.js');
-
-for(var file_id in Config.input) {
-  var file = Config.input[file_id];
-  var output_file_name = Object.keys(file)[0];
-  var url = path.join(root, file[output_file_name].url);
+for(var fileId in Config.input) {
+  var outputFileName = Object.keys(Config.input[fileId])[0];
+  var file = Config.input[fileId][outputFileName];
   var symbol = {};
-  symbol.lon = file[output_file_name].lon;
-  symbol.lat = file[output_file_name].lat;
+  symbol.lon = file.lon;
+  symbol.lat = file.lat;
 
-  fs.readFile(url, 'utf8', function(err, data) {
-    if(err != null) {
-      var colors = require('colors');
-      console.log(("Error: ENOENT: no such file or directory, open '" + url + "'.").red);
-    }
-    else {
-      var geo_data = Input(data, path.basename(url), symbol);
-      var output_url = path.join(root, Config.output.path, Config.output.filename).replace('[name]', output_file_name);
-      Output(geo_data, output_url);
-    }
-  });
+  if(url.parse(file.url).protocol != null) {
+    var request = require('request');
+    request.get(file.url, function(error, response, data) {
+      if(error != null) {
+        console.log(("Error: ENOENT: no such file or directory, open '" + file.url + "'.").red);
+      }
+      else {
+        var geoData = Input(data, path.basename(file.url), symbol);
+        var outputUrl = path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName);
+        Output(geoData, outputUrl);
+      }
+    });
+  }
+  else {
+    var fileUrl = path.join(root, file.url);
+    var fs = require('fs');
+    fs.readFile(fileUrl, 'utf8', function(error, data) {
+      if(error != null) {
+        console.log(("Error: ENOENT: no such file or directory, open '" + fileUrl + "'.").red);
+      }
+      else {
+        var geoData = Input(data, path.basename(fileUrl), symbol);
+        var outputUrl = path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName);
+        Output(geoData, outputUrl);
+      }
+    });
+  }
 }

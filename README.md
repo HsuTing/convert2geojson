@@ -17,31 +17,44 @@
 ## Config example
 
 - File name must be `convert2geojson.config.js`
-- `input`(You can add many file in here.) -> { (output filename): { url: (input file url), lon: (lon), lat: (lat)}}
-- `filename` -> [name].(file extension)
-- `path` -> output path
-- `center` -> sample map`s center and zoom in
-- `simpe` -> which file to include in simple map
 
 ```
 module.exports = { 
   input: [
-    {'try': { url: './input/test.json', lon: 'VillageLon', lat: 'VillageLat'}}
+    {'try': { url: './input/test.json', lon: 'Lon', lat: 'Lat'}},
+    {'temp': { url: 'http://example.com/test.json', lon: 'Lon', lat: 'Lat'}}
   ],  
   output: {
     filename: '[name].json',
     path: './output/'
-  },  
-  center: {
-    lat: 23.619, 
-    lon: 120.795,
-    zoom: 8
-  },  
-  simple: [
-    'try'
-  ]
+  }  
 }
 ```
+## Config field explanation
+
+input:
+- You can add many file in here.
+- `url` can be a path or a link.
+- Format:
+```
+  { (output filename): { url: (input file url), lon: (lon), lat: (lat)}}
+```
+
+filename:
+- `[name]` is stable. Do not change it.
+- Format:
+```
+[name].(file extension)
+```
+
+path:
+- Output files will be put in this folder.
+
+center:
+- [x] Sample map`s center and the level of zoom in.
+
+simpe:
+- [x] Files should be included in simple map.
 
 ## Issue
 
