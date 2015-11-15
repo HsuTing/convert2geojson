@@ -2,7 +2,7 @@
 
 ## Install
 
-- You need to install [Node.js](https://nodejs.org/en/).
+- You need to install [Node.js](https://nodejs.org/en/) (version >= 5.0.0).
 
 ```
   npm install convert2geojson
