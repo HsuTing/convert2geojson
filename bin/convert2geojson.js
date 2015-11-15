@@ -1,52 +1,66 @@
 #!/usr/bin/env node 
+'use strict';
 
-var path = require('path');
+let path = require('path');
 try {
-  var local = require.resolve(path.join(process.cwd(), "node_modules", "convert2geojson", "bin", "convert2geojson.js"));
+  let local = require.resolve(path.join(process.cwd(), "node_modules", "convert2geojson", "bin", "convert2geojson.js"));
   if(__filename !== local) {
     return require(local);
   }   
 } catch(e) {};
 
-var colors = require('colors');
-var url = require('url');
-var root = path.resolve(__filename, '..', '..', '..', '..');
-var Config = require(path.join(root, 'convert2geojson.config.js'));
-var convert2geojson = require('./../convert2geojson.js')
-var Input = convert2geojson.Input;
-var Output = convert2geojson.Output;
+let colors = require('colors');
+let url = require('url');
+let root = path.resolve(__filename, '..', '..', '..', '..');
 
-for(var fileId in Config.input) {
-  var outputFileName = Object.keys(Config.input[fileId])[0];
-  var file = Config.input[fileId][outputFileName];
-  var symbol = {};
-  symbol.lon = file.lon;
-  symbol.lat = file.lat;
+try {
+  require.resolve(path.join(root, 'convert2geojson.config.js'));
+} catch(e) {
+  console.log(("Can not find 'convert2geojson.config.js'.").red);
+  process.exit();
+}
+
+let Config = require(path.join(root, 'convert2geojson.config.js'));
+let Handle = require('./Handle.js');
+
+for(let fileId in Config.input) {
+  let outputFileName = Object.keys(Config.input[fileId])[0];
+  let file = Config.input[fileId][outputFileName];
 
   if(url.parse(file.url).protocol != null) {
-    var request = require('request');
+    let request = require('request');
     request.get(file.url, function(error, response, data) {
       if(error != null) {
         console.log(("Error: ENOENT: no such file or directory, open '" + file.url + "'.").red);
       }
       else {
-        var geoData = Input(data, path.basename(file.url), symbol);
-        var outputUrl = path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName);
-        Output(geoData, outputUrl);
+        let fileConfig = {
+          name: path.basename(file.url),
+          outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
+          symbol: file.symbol
+        };
+
+        Handle(data, fileConfig);
+        console.log(("'" + outputFileName + "' is converted.").blue);
       }
     });
   }
   else {
-    var fileUrl = path.join(root, file.url);
-    var fs = require('fs');
+    let fileUrl = path.join(root, file.url);
+    let fs = require('fs');
     fs.readFile(fileUrl, 'utf8', function(error, data) {
       if(error != null) {
         console.log(("Error: ENOENT: no such file or directory, open '" + fileUrl + "'.").red);
       }
       else {
-        var geoData = Input(data, path.basename(fileUrl), symbol);
-        var outputUrl = path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName);
-        Output(geoData, outputUrl);
+        let fileConfig = {
+          name: path.basename(fileUrl),
+          outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
+          symbol: file.symbol
+        };
+
+        Handle(data, fileConfig);
+        console.log(("'" + outputFileName + "' is converted.").blue);
       }
     });
   }

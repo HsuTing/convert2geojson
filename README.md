@@ -21,40 +21,28 @@
 ```
 module.exports = { 
   input: [
-    {'try': { url: './input/test.json', lon: 'Lon', lat: 'Lat'}},
-    {'temp': { url: 'http://example.com/test.json', lon: 'Lon', lat: 'Lat'}}
+    {'try': {
+      url: './input/test.json',
+      symbol: {lon: 'Longitude', lat: 'Latitude'}
+    }}  
   ],  
   output: {
     filename: '[name].json',
     path: './output/'
-  }  
+  }   
 }
 ```
-## Config field explanation
+You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
 
-- [x] input:
-  - You can add many file in here.
-  - `url` can be a path or a link.
-  - Format:
-```
-  { (output filename): { url: (input file url), lon: (lon), lat: (lat)}}
-```
+## Feature
 
-- [x] filename:
-  - `[name]` is stable. Do not change it.
-  - Format:
-```
-[name].(file extension)
-```
-
-- [x] path:
-  - Output files will be put in this folder.
-
-- [ ] center:
-  - Sample map`s center and the level of zoom in.
-
-- [ ] simpe:
-  - Files should be included in simple map.
+- [x] Convert evey form to geojson.
+- [x] Can choose personal properties.
+- [x] File can be online or offline.
+- [ ] File can be `json`, `csv`, `shapfile`.
+- [ ] Can open a sample map.
+- [ ] In sample map, data can change on the basis of time.
+- [ ] Customize style in sample map.
 
 ## Issue
 
