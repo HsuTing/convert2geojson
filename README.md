@@ -19,7 +19,7 @@ If you want to see your data on a simple map, you can do this.
 ```
   ./node_modules/.bin/convert2geojson -test
 ```
-You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
+You can see your simple map at `http://localhost:9090/`.
 
 ## Config example
 
