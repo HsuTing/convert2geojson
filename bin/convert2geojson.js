@@ -21,47 +21,37 @@ try {
 }
 
 let Config = require(path.join(root, 'convert2geojson.config.js'));
-let Handle = require('./Handle.js');
+let port = 0;
+let flag = {
+  "-nc": false,
+  "-s": false
+};
+let portFlag = false;
+process.argv.forEach(function (val, index, array) {
+  if(index != 0 && index != 1) {
+    if(flag[val] != undefined)
+      flag[val] = true;
+    else if(!portFlag) {
+      console.log(("Can not find '" + val + "'.").red);
+      process.exit();
+    }
 
-for(let fileId in Config.input) {
-  let outputFileName = Object.keys(Config.input[fileId])[0];
-  let file = Config.input[fileId][outputFileName];
-
-  if(url.parse(file.url).protocol != null) {
-    let request = require('request');
-    request.get(file.url, function(error, response, data) {
-      if(error != null) {
-        console.log(("Error: ENOENT: no such file or directory, open '" + file.url + "'.").red);
-      }
-      else {
-        let fileConfig = {
-          name: path.basename(file.url),
-          outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
-          symbol: file.symbol
-        };
-
-        Handle(data, fileConfig);
-        console.log(("'" + outputFileName + "' is converted.").blue);
-      }
-    });
+    if(val == "-s") {
+      portFlag = true;
+    }
+    else if(portFlag) {
+      port = val;
+      portFlag = false;
+    }
   }
-  else {
-    let fileUrl = path.join(root, file.url);
-    let fs = require('fs');
-    fs.readFile(fileUrl, 'utf8', function(error, data) {
-      if(error != null) {
-        console.log(("Error: ENOENT: no such file or directory, open '" + fileUrl + "'.").red);
-      }
-      else {
-        let fileConfig = {
-          name: path.basename(fileUrl),
-          outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
-          symbol: file.symbol
-        };
+});
 
-        Handle(data, fileConfig);
-        console.log(("'" + outputFileName + "' is converted.").blue);
-      }
-    });
-  }
+if(!flag["-nc"]) {
+  let Handle = require('./Handle.js');
+  Handle(Config);
+}
+
+if(flag["-s"]) {
+  let SimpleMap = require('./simpleMap.js');
+  SimpleMap(port);
 }

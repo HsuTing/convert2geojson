@@ -32,7 +32,7 @@ module.exports = {
   }   
 }
 ```
-You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
+You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
 
 ## Feature
 
@@ -48,6 +48,8 @@ You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/w
 
 - Now, this program just can transform `json` to `geojson`.
 - Only point in `json` can be transform.
+- Same field name shoulde be in array.
+- Can not use config.
 
 ## License
 
