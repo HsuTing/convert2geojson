@@ -14,6 +14,12 @@
   ./node_modules/.bin/convert2geojson
 ```
 
+If you want to see your data on a simple map, you can do this.
+
+```
+  ./node_modules/.bin/convert2geojson -test
+```
+
 ## Config example
 
 - File name must be `convert2geojson.config.js`
@@ -40,16 +46,17 @@ You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/w
 - [x] Can choose personal properties.
 - [x] File can be online or offline.
 - [ ] File can be `json`, `csv`, `shapfile`.
-- [ ] Can open a sample map.
-- [ ] In sample map, data can change on the basis of time.
-- [ ] Customize style in sample map.
+- [x] Can open a simple map.
+- [ ] In simple map, data can change on the basis of time.
+- [ ] Customize style in simple map.
+- [ ] Can choose fields which should be included.
+- [ ] Can reload config, If user add new file in `include`.
 
 ## Issue
 
 - Now, this program just can transform `json` to `geojson`.
 - Only point in `json` can be transform.
 - Same field name shoulde be in array.
-- Can not use config.
 
 ## License
 

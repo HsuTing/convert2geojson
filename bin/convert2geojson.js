@@ -18,15 +18,14 @@ try {
 } catch(e) {
   console.log(("Can not find 'convert2geojson.config.js'.").red);
   process.exit();
-}
+};
 
 let Config = require(path.join(root, 'convert2geojson.config.js'));
 let port = 0;
 let flag = {
-  "-nc": false,
-  "-s": false
+  "-ncv": false, //not convert
+  "-test": false //open simple map server
 };
-let portFlag = false;
 process.argv.forEach(function (val, index, array) {
   if(index != 0 && index != 1) {
     if(flag[val] != undefined)
@@ -35,23 +34,15 @@ process.argv.forEach(function (val, index, array) {
       console.log(("Can not find '" + val + "'.").red);
       process.exit();
     }
-
-    if(val == "-s") {
-      portFlag = true;
-    }
-    else if(portFlag) {
-      port = val;
-      portFlag = false;
-    }
   }
 });
 
-if(!flag["-nc"]) {
+if(!flag["-ncv"]) {
   let Handle = require('./Handle.js');
   Handle(Config);
 }
 
-if(flag["-s"]) {
+if(flag["-test"]) {
   let SimpleMap = require('./simpleMap.js');
-  SimpleMap(port);
+  SimpleMap();
 }

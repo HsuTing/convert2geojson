@@ -5,19 +5,50 @@ let colors = require('colors');
 let root = path.resolve(__filename, '..', '..');
 let express = require('express');
 let app = express();
-let port = 8000;
+let port = 8080;
 
-module.exports = function(portIn) {
-  if(portIn != 0) {
-    port = portIn;
+module.exports = function() {
+  let webpack = require('webpack');
+  let WebpackDevServer = require('webpack-dev-server');
+  let webpackConfig = require('./../webpack.config.js');
+
+  let express = require('express');
+  let proxy = require('proxy-middleware');
+  let url = require('url');
+
+  let app = express();
+  let Config = require(path.resolve(root, '..', '..', 'convert2geojson.config.js'));
+  if(Config.simple == undefined) {
+    console.log(('You need to add "simple" in "config". You can see https://github.com/HsuTing/convert2geojson/wiki .').red);
+    process.exit();
+  }
+  for(let i in Config.simple.include) {
+    let fileName = Object.keys(Config.simple.include[i])[0];
+    let url = path.join(Config.output.path, Config.output.filename).replace('[name]', fileName);
+    app.get('/' + url, function(req, res) {
+      res.sendFile(path.resolve(root, '..', '..', url));
+    });
   }
 
-  app.use(express.static(path.join(root, 'simple-map')));
-  app.get('/', function (req, res) {
-    res.sendfile(path.join(root, 'simple-map/index.html'));
+  app.use('/simple-map', proxy(url.parse('http://localhost:9090/simple-map')));
+  app.get('/', function(req, res) {
+      res.sendFile(path.join(root, 'simple-map/index.html'));
   });
 
-  app.listen(port, function (req, res) {
-    console.log(('Server running at http://127.0.0.1:' + port + '/').blue);
+  let server = new WebpackDevServer(webpack(webpackConfig), {
+    contentBase: path.join(root, 'simple-map'),
+    hot: true,
+    quiet: false,
+    noInfo: true,
+    publicPath: "/simple-map/",
+    stats: { colors: true },
+    proxy: {
+      "*": "http://localhost:9090"
+    },
+    headers: { "X-Custom-Header": "yes" }
   });
+
+  server.listen(port, "localhost", function() {});
+  app.listen(9090);
+  console.log(("Open simple map in 'http://localhost:9090/'. ").blue);
 }
