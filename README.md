@@ -19,6 +19,7 @@ If you want to see your data on a simple map, you can do this.
 ```
   ./node_modules/.bin/convert2geojson -test
 ```
+You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
 
 ## Config example
 
@@ -38,7 +39,7 @@ module.exports = {
   }   
 }
 ```
-You can see other setting in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
+You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
 
 ## Feature
 

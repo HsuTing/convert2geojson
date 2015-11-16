@@ -25,8 +25,17 @@ module.exports = function() {
   for(let i in Config.simple.include) {
     let fileName = Object.keys(Config.simple.include[i])[0];
     let url = path.join(Config.output.path, Config.output.filename).replace('[name]', fileName);
-    app.get('/' + url, function(req, res) {
-      res.sendFile(path.resolve(root, '..', '..', url));
+    let fs = require('fs');
+    fs.readFile(url, 'utf8', function(error, data) {
+      if(error != null) {
+        console.log(("Can not find '" + fileName + "'.").red);
+        process.exit();
+      }
+      else {
+        app.get('/' + url, function(req, res) {
+          res.sendFile(path.resolve(root, '..', '..', url));
+        });
+      }
     });
   }
 
