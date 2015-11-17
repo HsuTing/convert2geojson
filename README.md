@@ -50,7 +50,7 @@ You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/
 - [x] Can open a simple map.
 - [ ] In simple map, data can change on the basis of time.
 - [ ] Customize style in simple map.
-- [ ] Can choose fields which should be included.
+- [x] Can choose fields which should be included.
 - [ ] Can reload config, If user add new file in `include`.
 
 ## Issue

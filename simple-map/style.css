@@ -18,3 +18,8 @@
 .simple-map-button .mdl-button{
   margin: 5px;
 }
+
+.simple-map .header {
+  font-size: 15px;
+  font-weight: bold;
+}
