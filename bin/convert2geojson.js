@@ -30,7 +30,7 @@ process.argv.forEach(function (val, index, array) {
   if(index != 0 && index != 1) {
     if(flag[val] != undefined)
       flag[val] = true;
-    else if(!portFlag) {
+    else {
       console.log(("Can not find '" + val + "'.").red);
       process.exit();
     }
