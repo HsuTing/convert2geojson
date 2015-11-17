@@ -30,7 +30,7 @@ module.exports = {
   input: [
     {'try': {
       url: './input/test.json',
-      symbol: {lon: 'Longitude', lat: 'Latitude', unity: { Village: "Village" }}
+      symbol: {lon: 'Longitude', lat: 'Latitude', unit: { Village: "Village" }}
     }}  
   ],  
   output: {
