@@ -57,7 +57,6 @@ You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/
 
 - Now, this program just can transform `json` to `geojson`.
 - Only point in `json` can be transform.
-- Same field name shoulde be in array.
 
 ## License
 
