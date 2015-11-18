@@ -57,6 +57,7 @@ You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/
 
 - Now, this program just can transform `json` to `geojson`.
 - Only point in `json` can be transform.
+- Can not compare `{}` and `[]`
 
 ## License
 
