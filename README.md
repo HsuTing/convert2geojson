@@ -52,6 +52,7 @@ You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/
 - [ ] Customize style in simple map.
 - [x] Can choose fields which should be included.
 - [ ] Can reload config, If user add new file in `include`.
+- [ ] Developer can add function before handling data.
 
 ## Issue
 
