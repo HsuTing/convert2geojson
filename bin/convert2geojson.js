@@ -26,7 +26,7 @@ let flag = {
   "-ncv": false, //not convert
   "-test": false //open simple map server
 };
-process.argv.forEach(function (val, index, array) {
+process.argv.forEach((val, index, array) => {
   if(index != 0 && index != 1) {
     if(flag[val] != undefined)
       flag[val] = true;

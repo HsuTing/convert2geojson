@@ -7,7 +7,7 @@ let express = require('express');
 let app = express();
 let port = 8080;
 
-module.exports = function() {
+module.exports = () => {
   let webpack = require('webpack');
   let WebpackDevServer = require('webpack-dev-server');
   let webpackConfig = require('./../webpack.config.js');
@@ -26,13 +26,13 @@ module.exports = function() {
     let fileName = Object.keys(Config.simple.include[i])[0];
     let url = path.join(Config.output.path, Config.output.filename).replace('[name]', fileName);
     let fs = require('fs');
-    fs.readFile(url, 'utf8', function(error, data) {
+    fs.readFile(url, 'utf8', (error, data) => {
       if(error != null) {
         console.log(("Can not find '" + fileName + "'.").red);
         process.exit();
       }
       else {
-        app.get('/' + url, function(req, res) {
+        app.get('/' + url, (req, res) => {
           res.sendFile(path.resolve(root, '..', '..', url));
         });
       }
@@ -40,7 +40,7 @@ module.exports = function() {
   }
 
   app.use('/simple-map', proxy(url.parse('http://localhost:9090/simple-map')));
-  app.get('/', function(req, res) {
+  app.get('/', (req, res) => {
       res.sendFile(path.join(root, 'simple-map/index.html'));
   });
 
@@ -57,7 +57,7 @@ module.exports = function() {
     headers: { "X-Custom-Header": "yes" }
   });
 
-  server.listen(port, "localhost", function() {});
+  server.listen(port, "localhost", () => {});
   app.listen(9090);
   console.log(("Open simple map in 'http://localhost:9090/'. ").blue);
 }

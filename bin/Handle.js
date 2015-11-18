@@ -8,19 +8,19 @@ let root = path.resolve(__filename, '..', '..', '..', '..');
 let Input = require('./../lib/Input.js');
 let Output = require('./../lib/Output.js');
 
-function control(data, config) {
+let control = (data, config) => {
   let geoData = Input(data, config.name, config.symbol);
   Output(geoData, config.outputUrl);
 }
 
-module.exports = function(Config) {
+module.exports = (Config) => {
   for(let fileId in Config.input) {
     let outputFileName = Object.keys(Config.input[fileId])[0];
     let file = Config.input[fileId][outputFileName];
 
     if(url.parse(file.url).protocol != null) {
       let request = require('request');
-      request.get(file.url, function(error, response, data) {
+      request.get(file.url, (error, response, data) => {
         if(error != null) {
           console.log(("Error: ENOENT: no such file or directory, open '" + file.url + "'.").red);
         }   
@@ -39,7 +39,7 @@ module.exports = function(Config) {
     else {
       let fileUrl = path.join(root, file.url);
       let fs = require('fs');
-      fs.readFile(fileUrl, 'utf8', function(error, data) {
+      fs.readFile(fileUrl, 'utf8', (error, data) => {
         if(error != null) {
           console.log(("Error: ENOENT: no such file or directory, open '" + fileUrl + "'.").red);
         }
