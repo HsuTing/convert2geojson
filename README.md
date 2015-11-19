@@ -20,7 +20,7 @@ If you want to see your data on a simple map, you can do this.
   ./node_modules/.bin/convert2geojson -test
 ```
 - You can see your simple map at `http://localhost:9090/`.
-- You need to modify `convert2geojson.config.js`. You can see [Open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
+- You need to modify `convert2geojson.config.js`. You can see [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
 
 ## Config example
 
@@ -40,7 +40,8 @@ module.exports = {
   }   
 }
 ```
-You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
+- You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki).
+- You must see [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) at first time.
 
 ## Input and Output Example
 

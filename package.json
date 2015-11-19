@@ -1,6 +1,6 @@
 {
   "name": "convert2geojson",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "convert2geojson",
   "main": "index.js",
   "bin": {
