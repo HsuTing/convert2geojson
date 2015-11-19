@@ -1,4 +1,4 @@
-var lib_src = './node_modules/convert2geojson/';
+var lib_src = './node_modules/convert2geojson';
 
 var webpack = require('webpack');
 module.exports = {
