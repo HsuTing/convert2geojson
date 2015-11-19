@@ -19,7 +19,8 @@ If you want to see your data on a simple map, you can do this.
 ```
   ./node_modules/.bin/convert2geojson -test
 ```
-You can see your simple map at `http://localhost:9090/`.
+- You can see your simple map at `http://localhost:9090/`.
+- You need to modify `convert2geojson.config.js`. You can see [Open a simple map](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js#open-a-simple-map).
 
 ## Config example
 
@@ -41,6 +42,10 @@ module.exports = {
 ```
 You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/wiki).
 
+## Input and Output Example
+
+- [json](https://github.com/HsuTing/convert2geojson/wiki#json)
+
 ## Feature
 
 - [x] Convert evey form to geojson.
@@ -57,7 +62,6 @@ You can see other settings in [wiki](https://github.com/HsuTing/convert2geojson/
 ## Issue
 
 - Now, this program just can transform `json` to `geojson`.
-- Only point in `json` can be transform.
 - Can not compare `{}` and `[]`
 
 ## License
