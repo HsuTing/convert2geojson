@@ -20,13 +20,15 @@ module.exports = (Config) => {
 
     if(url.parse(file.url).protocol != null) {
       let request = require('request');
-      request.get(file.url, (error, response, data) => {
+      let fileUrl = file.url.split('!')[0];
+      let fileName = "temp." + file.url.split('!')[1];
+      request.get(fileUrl, (error, response, data) => {
         if(error != null) {
-          console.log(("Error: ENOENT: no such file or directory, open '" + file.url + "'.").red);
+          console.log(("Error: ENOENT: no such file or directory, open '" + fileUrl + "'.").red);
         }   
         else {
           let fileConfig = { 
-            name: path.basename(file.url),
+            name: fileName,
             outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
             symbol: file.symbol
           };

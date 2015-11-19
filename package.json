@@ -30,13 +30,11 @@
     "html-loader": "^0.3.0",
     "jquery": "^2.1.4",
     "leaflet": "^0.7.7",
-    "material-design-lite": "^1.0.6",
     "proxy-middleware": "^0.15.0",
     "request": "^2.65.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.1"
-  },
-  "devDependencies": {}
+  }
 }

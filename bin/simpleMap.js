@@ -26,7 +26,7 @@ module.exports = () => {
     let fileName = Object.keys(Config.simple.include[i])[0];
     let url = path.join(Config.output.path, Config.output.filename).replace('[name]', fileName);
     let fs = require('fs');
-    fs.readFile(url, 'utf8', (error, data) => {
+    fs.readFile(path.resolve(root, '..', '..', url), 'utf8', (error, data) => {
       if(error != null) {
         console.log(("Can not find '" + fileName + "'.").red);
         process.exit();

@@ -14,8 +14,6 @@ module.exports = {
             lib_src + '/leaflet/dist/leaflet.js',
             lib_src + '/leaflet/dist/leaflet-src.js',
             lib_src + '/leaflet/dist/leaflet.css',
-            lib_src + '/material-design-lite/material.js',
-            lib_src + '/material-design-lite/material.css',
             'webpack/hot/dev-server',
             'webpack-dev-server/client?http://localhost:9090'
         ]

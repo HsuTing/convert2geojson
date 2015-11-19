@@ -49,7 +49,7 @@ module.exports = {
 
 ## Feature
 
-- [x] Convert evey form to geojson.
+- [x] Convert every form to geojson.
 - [x] Can choose personal properties.
 - [x] File can be online or offline.
 - [ ] File can be `json`, `csv`, `shapfile`.
