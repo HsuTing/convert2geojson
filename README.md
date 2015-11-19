@@ -8,14 +8,21 @@
   npm install convert2geojson
 ```
 
-## Use
+## Convert to geosjon
 
 ```
   ./node_modules/.bin/convert2geojson
 ```
 
-If you want to see your data on a simple map, you can do this.
+## Open simple map
 
+- You need to install those.
+
+```
+  npm install express proxy-middleware webpack webpack-dev-server file-loader html-loader url-loader
+```
+
+- Now, you can use this.
 ```
   ./node_modules/.bin/convert2geojson -test
 ```

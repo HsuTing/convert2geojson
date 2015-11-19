@@ -1,6 +1,6 @@
 {
   "name": "convert2geojson",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "convert2geojson",
   "main": "index.js",
   "bin": {
@@ -24,15 +24,13 @@
   "homepage": "https://github.com/HsuTing/convert2geojson#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "css-loader": "^0.23.0",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {
     "express": "^4.13.3",
     "file-loader": "^0.8.4",
     "html-loader": "^0.3.0",
-    "jquery": "^2.1.4",
-    "leaflet": "^0.7.7",
     "proxy-middleware": "^0.15.0",
-    "request": "^2.65.0",
-    "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.1"

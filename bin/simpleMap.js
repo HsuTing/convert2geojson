@@ -43,6 +43,9 @@ module.exports = () => {
   app.get('/', (req, res) => {
       res.sendFile(path.join(root, 'simple-map/index.html'));
   });
+  app.get('/style.css', (req, res) => {
+      res.sendFile(path.join(root, 'simple-map/style.css'));
+  });
 
   let server = new WebpackDevServer(webpack(webpackConfig), {
     contentBase: path.join(root, 'simple-map'),
