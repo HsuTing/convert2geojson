@@ -68,6 +68,7 @@ module.exports = {
 
 - You can see your simple map at `http://localhost:9090/`.
 - You can see detail in [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
+- [Demo](http://HsuTing.github.io/convert2geojson/).
 
 ## Require convert2geojson
 
