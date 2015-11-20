@@ -10,29 +10,7 @@
 
 ## Convert to geosjon
 
-```
-  ./node_modules/.bin/convert2geojson
-```
-
-## Open simple map
-
-- You need to install those.
-
-```
-  npm install express proxy-middleware webpack webpack-dev-server file-loader html-loader url-loader
-```
-
-- Now, you can use this.
-```
-  ./node_modules/.bin/convert2geojson -test
-```
-- You can see your simple map at `http://localhost:9090/`.
-- You need to modify `convert2geojson.config.js`. You can see [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
-
-## Config example
-
-- File name must be `convert2geojson.config.js`
-
+- You need a config.js whose name is `convert2geojson.config.js`
 ```
 module.exports = { 
   input: [
@@ -47,8 +25,62 @@ module.exports = {
   }   
 }
 ```
+
+- Now, you can convert to geojosn.
+```
+  ./node_modules/.bin/convert2geojson
+```
+
 - You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
 - You must see [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) at first time.
+
+## Open simple map
+
+- You need to install those.
+```
+  npm install express proxy-middleware webpack webpack-dev-server file-loader html-loader url-loader
+```
+
+- You need a config.js whose name is `convert2geojson.config.js`
+```
+module.exports = {
+  output: {
+    filename: '[name].geojson',
+    path: './output/'
+  },
+  simple: {
+    id: "map",
+    center: {
+      lat: 23.619, 
+      lon: 120.795
+    },  
+    include: [
+      {'try': {}} 
+    ]
+  }
+}
+```
+
+- Now, you can open a simple map.
+```
+  ./node_modules/.bin/convert2geojson -test
+```
+
+- You can see your simple map at `http://localhost:9090/`.
+- You can see detail in [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
+
+## Require convert2geojson
+
+- Require convert2geojson in your program.
+```
+var convert2geojson = require('convert2geojson');
+var config = require('./convert2geojson.config.js');
+
+(function() {
+  convert2geojson.Map(config);
+})();
+```
+- You can see other function in [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).
 
 ## Input and Output Example
 
