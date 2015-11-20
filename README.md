@@ -47,7 +47,7 @@ module.exports = {
   }   
 }
 ```
-- You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki).
+- You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
 - You must see [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) at first time.
 
 ## Input and Output Example
