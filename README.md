@@ -72,7 +72,9 @@ module.exports = {
 
 ## Require convert2geojson
 
-- Require convert2geojson in your program.
+- You need to add `jquery`, `leaflet` in your program.
+- If you use function `Map`, you need to add `material-design-liet` in your program.
+
 ```
 var convert2geojson = require('convert2geojson');
 var config = require('./convert2geojson.config.js');
