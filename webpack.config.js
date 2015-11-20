@@ -1,27 +1,23 @@
+var lib_src = './node_modules/convert2geojson';
+
 var webpack = require('webpack');
 module.exports = {
     entry: {
-        "index": './example/src/index.jsx',
-        "index2": './example/src/index2.jsx'
+        "index": [
+            lib_src + '/bin/Map.js',
+            'webpack/hot/dev-server',
+            'webpack-dev-server/client?http://localhost:9090'
+        ]
     },
     output: {
         filename: '[name].js',
-        path: './example/dist',
+        path: __dirname + '/simple-map',
+        publicPath: "http://localhost:9090/simple-map/"
     },
     module: {
         loaders: [
-            {
-                test: /\.jsx$/,
-                loader: 'babel',
-                query: {
-                  presets: ['es2015']
-                } 
-            },
             { test: /\.png$/, loader: 'url-loader?limit=100000' }
         ]
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx', '.css', '.min.css', '.min.js', '.png', '.jpg', '.html', '.json']
     },
     externals: {
       'jquery': '$',
