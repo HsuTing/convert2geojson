@@ -2,7 +2,7 @@
   "name": "convert2geojson",
   "version": "1.0.13",
   "description": "convert2geojson",
-  "main": "index.js",
+  "main": "convert2geojson.js",
   "bin": {
     "convert2geojson": "./bin/convert2geojson.js"
   },
