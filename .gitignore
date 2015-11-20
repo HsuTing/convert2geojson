@@ -1,7 +1,4 @@
 .DS_Store
-output/*.json
-output/*.geojson
-input/*.json
 *.pyc
 node_modules
 *.swp

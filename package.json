@@ -1,0 +1,38 @@
+{
+  "name": "convert2geojson",
+  "version": "1.0.13",
+  "description": "convert2geojson",
+  "main": "convert2geojson.js",
+  "bin": {
+    "convert2geojson": "./bin/convert2geojson.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HsuTing/convert2geojson.git"
+  },
+  "keywords": [
+    "convert2geojson"
+  ],
+  "author": "HsuTing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HsuTing/convert2geojson/issues"
+  },
+  "homepage": "https://github.com/HsuTing/convert2geojson#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {
+    "express": "^4.13.3",
+    "file-loader": "^0.8.4",
+    "html-loader": "^0.3.0",
+    "proxy-middleware": "^0.15.0",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.6",
+    "webpack-dev-server": "^1.12.1"
+  }
+}
