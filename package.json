@@ -24,7 +24,6 @@
   "homepage": "https://github.com/HsuTing/convert2geojson#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "csv2array": "0.0.4",
     "request": "^2.65.0"
   },
   "devDependencies": {

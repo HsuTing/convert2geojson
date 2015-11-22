@@ -49,12 +49,12 @@ module.exports =
 
 	var convert2geojson = {};
 
-	//convert2geojson.Input = require('./Input.js');
-	convert2geojson.Map = __webpack_require__(1);
-	convert2geojson.Init = __webpack_require__(4);
-	convert2geojson.Add = __webpack_require__(6);
-	convert2geojson.Reset = __webpack_require__(5).resetView;
-	convert2geojson.Set = __webpack_require__(5).setPlace;
+	convert2geojson.Input = __webpack_require__(1);
+	convert2geojson.Map = __webpack_require__(6);
+	convert2geojson.Init = __webpack_require__(7);
+	convert2geojson.Add = __webpack_require__(9);
+	convert2geojson.Reset = __webpack_require__(8).resetView;
+	convert2geojson.Set = __webpack_require__(8).setPlace;
 
 	module.exports = convert2geojson;
 
@@ -65,39 +65,26 @@ module.exports =
 	'use strict';
 
 	var path = __webpack_require__(2);
+	var jsonProcessor = __webpack_require__(4);
+	var csvProcessor = __webpack_require__(5);
 
-	var Init = __webpack_require__(4);
-	var Reset = __webpack_require__(5).resetView;
-	var Set = __webpack_require__(5).setPlace;
-	var Add = __webpack_require__(6);
+	module.exports = function (data, filename, symbol, handle) {
+	  var type = path.extname(filename).replace('.', '');
+	  var output = "";
 
-	module.exports = function (Config) {
-	  var html = '<div class="simple-map-button">';
-	  html += '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-reset">';
-	  html += '<i class="material-icons">refresh</i>';
-	  html += '</button>';
-	  html += '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-set">';
-	  html += '<i class="material-icons">place</i>';
-	  html += '</button>';
-	  html += '</div>';
+	  switch (type) {
+	    case 'json':
+	      output = jsonProcessor(JSON.parse(data), symbol, handle);
+	      break;
+	    case 'csv':
+	      output = csvProcessor(data, symbol, handle);
+	      break;
+	    default:
+	      console.log("Can not convert this type. If you need to convert to this type, you can open issue in here['https://github.com/HsuTing/convert2geojson/issues'].");
+	      break;
+	  }
 
-	  $('#' + Config.simple.id).addClass('simple-map').html(html);
-	  var map = Init(Config.simple.id, Config.simple.center);
-	  var outputPath = path.join(Config.output.path, Config.output.filename);
-	  Add(map, outputPath, Config.simple.include);
-
-	  var reset = {
-	    lat: Config.simple.center.lat,
-	    lon: Config.simple.center.lon,
-	    zoom: Config.simple.center.zoom.normal
-	  };
-
-	  $(".simple-map-reset").click(function () {
-	    Reset(map, reset);
-	  });
-	  $(".simple-map-set").click(function () {
-	    Set(map);
-	  });
+	  return output;
 	};
 
 /***/ },
@@ -431,6 +418,329 @@ module.exports =
 
 /***/ },
 /* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+	var compare = function compare(input, symbol) {
+	  for (var key in symbol) {
+	    if (input[key] == undefined || _typeof(input[key]) != _typeof(symbol[key])) return false;
+	  }
+	  return true;
+	};
+
+	var reSort = function reSort(input, symbolData, arraySymbol, symbol) {
+	  if (!compare(input, symbol)) {
+	    if ((typeof input === "undefined" ? "undefined" : _typeof(input)) == "object") {
+	      for (var key in input) {
+	        if (symbol.path != undefined && symbol.path == key) {
+	          symbolData[key] = input[key];
+	        } else if (symbol.lat == key) {
+	          symbolData[key] = input[key];
+	        } else if (symbol.lon == key) {
+	          symbolData[key] = input[key];
+	        } else {
+	          reSort(input[key], symbolData, arraySymbol, symbol);
+	          if (_typeof(input[key]) != "object") {
+	            if (symbolData[key] == undefined) {
+	              symbolData[key] = input[key];
+	            } else {
+	              if (_typeof(symbolData[key]) == "object") {
+	                var temp = {};
+	                temp[key] = input[key];
+	                symbolData[key].push(temp);
+	              } else {
+	                var temp1 = {};
+	                var temp2 = {};
+	                temp1[key] = symbolData[key];
+	                temp2[key] = input[key];
+	                symbolData[key] = [];
+	                symbolData[key].push(temp1);
+	                symbolData[key].push(temp2);
+	              }
+	            }
+	          }
+	        }
+	      }
+	    }
+	  } else {
+	    arraySymbol.push(input);
+	  }
+	};
+
+	var combine = function combine(tempSymbol, symbolData, symbol) {
+	  for (var key in tempSymbol) {
+	    if (_typeof(tempSymbol[key]) == "object") {
+	      if (symbol.path != undefined && symbol.path == key) {
+	        symbolData[key] = tempSymbol[key];
+	      } else if (symbol.lon == key) {
+	        symbolData[key] = tempSymbol[key];
+	      } else if (symbol.lat == key) {
+	        symbolData[key] = tempSymbol[key];
+	      } else {
+	        combine(tempSymbol[key], symbolData);
+	      }
+	    } else {
+	      if (symbolData[key] == undefined) {
+	        symbolData[key] = tempSymbol[key];
+	      } else {
+	        if (_typeof(symbolData[key]) == "object") {
+	          var temp = {};
+	          temp[key] = tempSymbol[key];
+	          symbolData[key].push(temp);
+	        } else {
+	          var temp1 = {};
+	          var temp2 = {};
+	          temp1[key] = symbolData[key];
+	          temp2[key] = tempSymbol[key];
+	          symbolData[key] = [];
+	          symbolData[key].push(temp1);
+	          symbolData[key].push(temp2);
+	        }
+	      }
+	    }
+	  }
+	};
+
+	var findSymbol = function findSymbol(input, output, symbol) {
+	  for (var key in input) {
+	    if (_typeof(input[key]) == "object") {
+	      if (symbol.path != undefined && symbol.path == key) {
+	        for (var pId in input[key]) {
+	          output.symbol.path.push(input[key][pId]);
+	        }
+	      } else if (symbol.lon == key) {
+	        output.symbol.lon = [];
+	        for (var lonId in input[key]) {
+	          output.symbol.lon.push(input[key][lonId]);
+	        }
+	      } else if (symbol.lat == key) {
+	        output.symbol.lat = [];
+	        for (var latId in input[key]) {
+	          output.symbol.lat.push(input[key][latId]);
+	        }
+	      } else {
+	        findSymbol(input[key], output, symbol);
+	      }
+	    } else {
+	      if (key == symbol.lon) output.symbol.lon = input[key];else if (key == symbol.lat) output.symbol.lat = input[key];else {
+	        if (symbol.include != undefined) {
+	          for (var includeKey in symbol.include) {
+	            if (key == includeKey) {
+	              output.data[symbol.include[includeKey]] = input[key];
+	            }
+	          }
+	        } else {
+	          if (output.data[key] == undefined) {
+	            output.data[key] = input[key];
+	          } else {
+	            if (_typeof(output.data[key]) == "object") {
+	              output.data[key].push(input[key]);
+	            } else {
+	              var tempValue = output.data[key];
+	              output.data[key] = [];
+	              output.data[key].push(tempValue);
+	              output.data[key].push(input[key]);
+	            }
+	          }
+	        }
+	      }
+	    }
+	  }
+	};
+
+	var makeTemplate = function makeTemplate(data, type, coordinates) {
+	  var template = { type: "Feature", geometry: {} };
+	  data.data.lon = data.symbol.lon;
+	  data.data.lat = data.symbol.lat;
+
+	  template.geometry.type = type;
+	  template.geometry.coordinates = coordinates;
+	  template.properties = data.data;
+
+	  return template;
+	};
+
+	module.exports = function (data, symbol, handle) {
+	  if (handle != undefined) {
+	    handle(data);
+	  }
+
+	  var output = {
+	    "type": "FeatureCollection",
+	    "features": []
+	  };
+
+	  if (data[0] == undefined) {
+	    data = [data];
+	  }
+
+	  if (symbol.path == undefined && symbol.lon == undefined && symbol.lat == undefined || symbol.unit == undefined) {
+	    console.log("Error, ['lon', 'lat'] or ['path'] is needed and 'unit' is needed, too.");
+	    process.exit();
+	  }
+
+	  for (var itemId in data) {
+	    var item = data[itemId];
+	    var symbolData = {};
+	    var arraySymbol = [];
+	    reSort(item, symbolData, arraySymbol, symbol.unit);
+
+	    for (var symbolId in arraySymbol) {
+	      var outputSymbol = { symbol: { lon: "", lat: "", path: [] }, data: {} };
+	      var tempSymbol = arraySymbol[symbolId];
+	      var tempSymbolData = JSON.parse(JSON.stringify(symbolData));
+
+	      combine(tempSymbol, tempSymbolData, symbol);
+	      findSymbol(tempSymbolData, outputSymbol, symbol);
+
+	      if (outputSymbol.symbol.path.length == 0) {
+	        outputSymbol.data.lon = outputSymbol.symbol.lon;
+	        outputSymbol.data.lat = outputSymbol.symbol.lat;
+	        if (_typeof(outputSymbol.symbol.lon) == "object" && _typeof(outputSymbol.symbol.lat) == "object") {
+	          for (var id in outputSymbol.symbol.lon) {
+	            output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]));
+	          }
+	        } else {
+	          output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]));
+	        }
+	      } else {
+	        if (outputSymbol.symbol.lon != "" && outputSymbol.symbol.lat != "") {
+	          outputSymbol.data.lon = outputSymbol.symbol.lon;
+	          outputSymbol.data.lat = outputSymbol.symbol.lat;
+	          if (_typeof(outputSymbol.symbol.lon) == "object" && _typeof(outputSymbol.symbol.lat) == "object") {
+	            for (var id in outputSymbol.symbol.lon) {
+	              output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]));
+	            }
+	          } else {
+	            output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]));
+	          }
+	        }
+
+	        outputSymbol.data.path = outputSymbol.symbol.path;
+	        var type = _typeof(outputSymbol.symbol.path[0][0]) == "object" ? "Polygon" : "LineString";
+	        output.features.push(makeTemplate(outputSymbol, type, outputSymbol.symbol.path));
+	      }
+	    }
+	  }
+
+	  return output;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var csv2json = function csv2json(data) {
+	  var lines = data.split(/\r\n|\n/);
+	  var keys = [];
+	  var output = [];
+	  for (var lineId in lines) {
+	    var line = lines[lineId].split(/,/);
+	    if (line == "" || line == undefined) {
+	      continue;
+	    } else if (lineId == 0) {
+	      for (var key in line) {
+	        keys.push(line[key]);
+	      }
+	    } else {
+	      var item = {};
+	      for (var key in line) {
+	        item[keys[key]] = line[key];
+	      }
+	      output.push(item);
+	    }
+	  }
+
+	  return output;
+	};
+
+	module.exports = function (data, symbol, handle) {
+	  if (handle != undefined) {
+	    handle(data);
+	  }
+
+	  var output = { "type": "FeatureCollection", "features": [] };
+	  var files = csv2json(data);
+	  for (var id in files) {
+	    var file = files[id];
+	    var lon = parseFloat(file[symbol.lon]);
+	    var lat = parseFloat(file[symbol.lat]);
+
+	    var properties = {};
+	    if (symbol.include != undefined) {
+	      for (var includeKey in symbol.include) {
+	        properties[symbol.include[includeKey]] = file[includeKey];
+	      }
+	    } else {
+	      for (var item in file) {
+	        properties[item] = file[item];
+	      }
+	    }
+
+	    var template = {
+	      type: "Feature",
+	      geometry: {
+	        "type": "Point",
+	        "coordinates": [lon, lat]
+	      },
+	      "properties": properties
+	    };
+
+	    output.features.push(template);
+	  }
+	  return output;
+	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var path = __webpack_require__(2);
+
+	var Init = __webpack_require__(7);
+	var Reset = __webpack_require__(8).resetView;
+	var Set = __webpack_require__(8).setPlace;
+	var Add = __webpack_require__(9);
+
+	module.exports = function (Config) {
+	  var html = '<div class="simple-map-button">';
+	  html += '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-reset">';
+	  html += '<i class="material-icons">refresh</i>';
+	  html += '</button>';
+	  html += '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-set">';
+	  html += '<i class="material-icons">place</i>';
+	  html += '</button>';
+	  html += '</div>';
+
+	  $('#' + Config.simple.id).addClass('simple-map').html(html);
+	  var map = Init(Config.simple.id, Config.simple.center);
+	  var outputPath = path.join(Config.output.path, Config.output.filename);
+	  Add(map, outputPath, Config.simple.include);
+
+	  var reset = {
+	    lat: Config.simple.center.lat,
+	    lon: Config.simple.center.lon,
+	    zoom: Config.simple.center.zoom.normal
+	  };
+
+	  $(".simple-map-reset").click(function () {
+	    Reset(map, reset);
+	  });
+	  $(".simple-map-set").click(function () {
+	    Set(map);
+	  });
+	};
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -483,7 +793,7 @@ module.exports =
 	};
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -506,7 +816,7 @@ module.exports =
 	module.exports = Button;
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
