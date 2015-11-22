@@ -9,7 +9,7 @@ let Input = require('./../lib/Input.js');
 let Output = require('./../lib/Output.js');
 
 let control = (data, config) => {
-  let geoData = Input(data, config.name, config.symbol);
+  let geoData = Input(data, config.name, config.symbol, config.handle);
   Output(geoData, config.outputUrl);
 }
 
@@ -30,7 +30,8 @@ module.exports = (Config) => {
           let fileConfig = { 
             name: fileName,
             outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
-            symbol: file.symbol
+            symbol: file.symbol,
+            handle: file.handle
           };
 
           control(data, fileConfig);
@@ -49,7 +50,8 @@ module.exports = (Config) => {
           let fileConfig = {
             name: path.basename(fileUrl),
             outputUrl: path.join(root, Config.output.path, Config.output.filename).replace('[name]', outputFileName),
-            symbol: file.symbol
+            symbol: file.symbol,
+            handle: file.handle
           };
   
           control(data, fileConfig);

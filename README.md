@@ -96,11 +96,10 @@ var config = require('./convert2geojson.config.js');
 - [x] File can be online or offline.
 - [ ] File can be `json`, `csv`, `shapfile`.
 - [x] Can open a simple map.
-- [ ] In simple map, data can change on the basis of time.
-- [ ] Customize style in simple map.
+- [x] Can filter data.
+- [x] Customize style in simple map.
 - [x] Can choose fields which should be included.
-- [ ] Can reload config, If user add new file in `include`.
-- [ ] Developer can add function before handling data.
+- [x] Developer can add function before handling data.
 
 ## Issue
 
