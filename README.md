@@ -29,7 +29,7 @@ module.exports = {
   }   
 }
 ```
-- `url` can be a path or a link. If it is a link, you need to add type after link. For example, if link is `http://example.com`, you should write `http://example.com!json.
+- `url` can be a path or a link. If it is a link, you need to add type after link. For example, if link is `http://example.com`, you should write `http://example.com!json`.
 
 - Now, you can convert to geojosn.
 ```
