@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="HsuTing, Hsu, Ting">
+    <meta name="description" content="Simple map">
+    <meta name="author" content="HsuTing">
+    <title>simple map</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+
+    <style>
+      .simple-map {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+      }
+      .simple-map-button {
+        position: fixed;
+        top: 50%;
+        right: 10px;
+        margin-top: -65px;
+        width: 65px;
+        z-index: 10; 
+      }
+      .simple-map-button .mdl-button{
+        margin: 5px;
+      }
+      .simple-map .header {
+        font-size: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map" class="simple-map">
+    </div>
+  </body>
+
+  <script src="./dist/index2.js"></script>
+</html>
