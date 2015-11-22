@@ -35,7 +35,6 @@ module.exports = (Config) => {
           };
 
           control(data, fileConfig);
-          console.log(("'" + outputFileName + "' is converted.").blue);
         }
       });
     }
@@ -55,7 +54,6 @@ module.exports = (Config) => {
           };
   
           control(data, fileConfig);
-          console.log(("'" + outputFileName + "' is converted.").blue);
         }
       });
     }

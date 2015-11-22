@@ -94,7 +94,7 @@ var config = require('./convert2geojson.config.js');
 - [x] Convert every form to geojson.
 - [x] Can choose personal properties.
 - [x] File can be online or offline.
-- [ ] File can be `json`, `csv`, `shapfile`.
+- [x] File can be `json`, `csv`.
 - [x] Can open a simple map.
 - [x] Can filter data.
 - [x] Customize style in simple map.
@@ -103,7 +103,6 @@ var config = require('./convert2geojson.config.js');
 
 ## Issue
 
-- Now, this program just can transform `json` to `geojson`.
 - Can not compare `{}` and `[]`
 
 ## License
