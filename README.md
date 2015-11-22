@@ -17,7 +17,11 @@ module.exports = {
     {'try': {
       url: './input/test.json',
       symbol: {lon: 'Longitude', lat: 'Latitude', unit: { Village: "Village" }}
-    }}  
+    }},
+    {'temp': {
+      url: './input/test.csv',
+      symbol: {lon: 'Longitude', lat: 'Latitude'}
+    }}
   ],  
   output: {
     filename: '[name].json',
@@ -25,6 +29,7 @@ module.exports = {
   }   
 }
 ```
+- `url` can be a path or a link. If it is a link, you need to add type after link. For example, if link is `http://example.com`, you should write `http://example.com!json.
 
 - Now, you can convert to geojosn.
 ```
@@ -88,6 +93,7 @@ var config = require('./convert2geojson.config.js');
 ## Input and Output Example
 
 - [json](https://github.com/HsuTing/convert2geojson/wiki#json)
+- [csv](https://github.com/HsuTing/convert2geojson/wiki#csv)
 
 ## Feature
 
