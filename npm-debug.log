@@ -1,0 +1,104 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.3.12
+3 info using node@v5.1.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Library/WebServer/Documents/develop/node_modules/convert2geojson',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/hsuting/.npm/convert2geojson/1.1.3/package.tgz not in flight; packing
+9 info lifecycle convert2geojson@1.1.3~prepublish: convert2geojson@1.1.3
+10 silly lifecycle convert2geojson@1.1.3~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/Users/hsuting/.npm/convert2geojson/1.1.3/package.tgz',
+11 verbose tar pack   '/Library/WebServer/Documents/develop/node_modules/convert2geojson' ]
+12 verbose tarball /Users/hsuting/.npm/convert2geojson/1.1.3/package.tgz
+13 verbose folder /Library/WebServer/Documents/develop/node_modules/convert2geojson
+14 verbose addLocalTarball adding from inside cache /Users/hsuting/.npm/convert2geojson/1.1.3/package.tgz
+15 silly cache afterAdd convert2geojson@1.1.3
+16 verbose afterAdd /Users/hsuting/.npm/convert2geojson/1.1.3/package/package.json not in flight; writing
+17 verbose afterAdd /Users/hsuting/.npm/convert2geojson/1.1.3/package/package.json written
+18 silly publish { name: 'convert2geojson',
+18 silly publish   version: '1.1.3',
+18 silly publish   description: 'convert2geojson',
+18 silly publish   main: 'convert2geojson.js',
+18 silly publish   bin: { convert2geojson: './bin/convert2geojson.js' },
+18 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git+https://github.com/HsuTing/convert2geojson.git' },
+18 silly publish   keywords: [ 'convert2geojson' ],
+18 silly publish   author: { name: 'HsuTing' },
+18 silly publish   license: 'MIT',
+18 silly publish   bugs: { url: 'https://github.com/HsuTing/convert2geojson/issues' },
+18 silly publish   homepage: 'https://github.com/HsuTing/convert2geojson#readme',
+18 silly publish   dependencies: { colors: '^1.1.2', csv2array: '0.0.4', request: '^2.65.0' },
+18 silly publish   devDependencies:
+18 silly publish    { express: '^4.13.3',
+18 silly publish      'file-loader': '^0.8.4',
+18 silly publish      'html-loader': '^0.3.0',
+18 silly publish      'proxy-middleware': '^0.15.0',
+18 silly publish      'url-loader': '^0.5.6',
+18 silly publish      webpack: '^1.12.6',
+18 silly publish      'webpack-dev-server': '^1.12.1' },
+18 silly publish   readme: '# Convert to Geojson\n\n## Install\n\n- You need to install [Node.js](https://nodejs.org/en/) (version >= 5.0.0).\n\n```\n  npm install convert2geojson\n```\n\n## Convert to geosjon\n\n- You need a config.js whose name is `convert2geojson.config.js`\n```\nmodule.exports = { \n  input: [\n    {\'try\': {\n      url: \'./input/test.json\',\n      symbol: {lon: \'Longitude\', lat: \'Latitude\', unit: { Village: "Village" }}\n    }},\n    {\'temp\': {\n      url: \'./input/test.csv\',\n      symbol: {lon: \'Longitude\', lat: \'Latitude\'}\n    }}\n  ],  \n  output: {\n    filename: \'[name].json\',\n    path: \'./output/\'\n  }   \n}\n```\n- `url` can be a path or a link. If it is a link, you need to add type after link. For example, if link is `http://example.com`, you should write `http://example.com!json`.\n\n- Now, you can convert to geojosn.\n```\n  ./node_modules/.bin/convert2geojson\n```\n\n- You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).\n- You must see [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) at first time.\n\n## Open simple map\n\n- You need to install those.\n```\n  npm install express proxy-middleware webpack webpack-dev-server file-loader html-loader url-loader\n```\n\n- You need a config.js whose name is `convert2geojson.config.js`\n```\nmodule.exports = {\n  output: {\n    filename: \'[name].geojson\',\n    path: \'./output/\'\n  },\n  simple: {\n    id: "map",\n    center: {\n      lat: 23.619, \n      lon: 120.795\n    },  \n    include: [\n      {\'try\': {}} \n    ]\n  }\n}\n```\n\n- Now, you can open a simple map.\n```\n  ./node_modules/.bin/convert2geojson -test\n```\n\n- You can see your simple map at `http://localhost:9090/`.\n- You can see detail in [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).\n- [Demo](http://HsuTing.github.io/convert2geojson/).\n\n## Require convert2geojson\n\n- You need to add `jquery`, `leaflet` in your program.\n- If you use function `Map`, you need to add `material-design-lite` in your program.\n\n```\nvar convert2geojson = require(\'convert2geojson\');\nvar config = require(\'./convert2geojson.config.js\');\n\n(function() {\n  convert2geojson.Map(config);\n})();\n```\n- You can see other function in [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).\n\n## Input and Output Example\n\n- [json](https://github.com/HsuTing/convert2geojson/wiki#json)\n- [csv](https://github.com/HsuTing/convert2geojson/wiki#csv)\n\n## Feature\n\n- [x] Convert every form to geojson.\n- [x] Can choose personal properties.\n- [x] File can be online or offline.\n- [x] File can be `json`, `csv`.\n- [x] Can open a simple map.\n- [x] Can filter data.\n- [x] Customize style in simple map.\n- [x] Can choose fields which should be included.\n- [x] Developer can add function before handling data.\n\n## Issue\n\n- Can not compare `{}` and `[]`\n\n## License\n\n[MIT](https://github.com/HsuTing/convert2geojson/blob/master/LICENSE)\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: '40b1e9fe2c1f5c312ef95eee37977e57221ca8b9',
+18 silly publish   _id: 'convert2geojson@1.1.3',
+18 silly publish   _shasum: '517de0850e3d7df2feb75f8141942c3600e7ca7d',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name convert2geojson
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/convert2geojson
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/hsuting/.npm/convert2geojson/1.1.3/package.tgz
+26 verbose request uri https://registry.npmjs.org/convert2geojson
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 1:21:21 AM
+29 verbose request using bearer token for auth
+30 verbose request id 9bbed02ad293585c
+31 http request PUT https://registry.npmjs.org/convert2geojson
+32 http 403 https://registry.npmjs.org/convert2geojson
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=60',
+33 verbose headers   'content-length': '95',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Sun, 22 Nov 2015 17:21:23 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-hkg6820-HKG',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1448212882.564909,VS0,VE1082' }
+34 verbose request invalidating /Users/hsuting/.npm/registry.npmjs.org/convert2geojson on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 1.1.3." : convert2geojson
+36 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+36 verbose stack     at emitTwo (events.js:87:13)
+36 verbose stack     at Request.emit (events.js:172:7)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1082:10)
+36 verbose stack     at emitOne (events.js:82:20)
+36 verbose stack     at Request.emit (events.js:169:7)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+37 verbose statusCode 403
+38 verbose pkgid convert2geojson
+39 verbose cwd /Library/WebServer/Documents/develop/node_modules/convert2geojson
+40 error Darwin 15.0.0
+41 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+42 error node v5.1.0
+43 error npm  v3.3.12
+44 error code E403
+45 error "You cannot publish over the previously published version 1.1.3." : convert2geojson
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
