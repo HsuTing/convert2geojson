@@ -48,10 +48,19 @@ import convert2geojson from 'convert2geojson';
 */
   $(".simple-map-input").change(() => {
     let url = $("#data-url").val();
-    $.get(url, (data) => {
-      let symbol = { lon: "TWD67Lon", lat: "TWD67Lat", unit: { County: "" } };
-      let output = convert2geojson.Input(data, "temp.json", symbol); 
-console.log(output);
-    }, "text");
+    let lon = $("#data-lon").val();
+    let lat = $("#data-lat").val();
+    let type = $("#data-type").val();
+
+    if(url != "" && lon != "" && lat != "" && type != "") {
+      $.get(url, (data) => {
+        let symbol = { lon: lon, lat: lat, unit: { } };
+        let output = convert2geojson.Input(data, "temp." + type, symbol); 
+        convert2geojson.Add(map, undefined, [
+          {'temp': {data: output}}
+        ]);
+        $(".simple-map-input").toggle(400);
+      }, "text");
+    }
   });
 })();
