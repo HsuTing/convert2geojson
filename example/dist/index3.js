@@ -168,7 +168,7 @@
 
 		'use strict';
 
-		let convert2geojson = {};
+		var convert2geojson = {};
 
 		convert2geojson.Input = __webpack_require__(1);
 		convert2geojson.Map = __webpack_require__(6);
@@ -179,22 +179,21 @@
 
 		module.exports = convert2geojson;
 
-
 	/***/ },
 	/* 1 */
 	/***/ function(module, exports, __webpack_require__) {
 
 		'use strict';
 
-		let path = __webpack_require__(2);
-		let jsonProcessor = __webpack_require__(4);
-		let csvProcessor = __webpack_require__(5);
+		var path = __webpack_require__(2);
+		var jsonProcessor = __webpack_require__(4);
+		var csvProcessor = __webpack_require__(5);
 
-		module.exports = (data, filename, symbol, handle) => {
-		  let type = path.extname(filename).replace('.', '');
-		  let output = "";
+		module.exports = function (data, filename, symbol, handle) {
+		  var type = path.extname(filename).replace('.', '');
+		  var output = "";
 
-		  switch(type) {
+		  switch (type) {
 		    case 'json':
 		      output = jsonProcessor(JSON.parse(data), symbol, handle);
 		      break;
@@ -207,14 +206,15 @@
 		  }
 
 		  return output;
-		}
-
+		};
 
 	/***/ },
 	/* 2 */
 	/***/ function(module, exports, __webpack_require__) {
 
-		/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+		/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+		// Copyright Joyent, Inc. and other Node contributors.
 		//
 		// Permission is hereby granted, free of charge, to any person obtaining a
 		// copy of this software and associated documentation files (the
@@ -267,20 +267,19 @@
 
 		// Split a filename into [root, dir, basename, ext], unix version
 		// 'root' is just a slash, or nothing.
-		var splitPathRe =
-		    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-		var splitPath = function(filename) {
+		var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+		var splitPath = function splitPath(filename) {
 		  return splitPathRe.exec(filename).slice(1);
 		};
 
 		// path.resolve([from ...], to)
 		// posix version
-		exports.resolve = function() {
+		exports.resolve = function () {
 		  var resolvedPath = '',
 		      resolvedAbsolute = false;
 
 		  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-		    var path = (i >= 0) ? arguments[i] : process.cwd();
+		    var path = i >= 0 ? arguments[i] : process.cwd();
 
 		    // Skip empty and invalid entries
 		    if (typeof path !== 'string') {
@@ -297,21 +296,21 @@
 		  // handle relative paths to be safe (might happen when process.cwd() fails)
 
 		  // Normalize the path
-		  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+		  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function (p) {
 		    return !!p;
 		  }), !resolvedAbsolute).join('/');
 
-		  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+		  return (resolvedAbsolute ? '/' : '') + resolvedPath || '.';
 		};
 
 		// path.normalize(path)
 		// posix version
-		exports.normalize = function(path) {
+		exports.normalize = function (path) {
 		  var isAbsolute = exports.isAbsolute(path),
 		      trailingSlash = substr(path, -1) === '/';
 
 		  // Normalize the path
-		  path = normalizeArray(filter(path.split('/'), function(p) {
+		  path = normalizeArray(filter(path.split('/'), function (p) {
 		    return !!p;
 		  }), !isAbsolute).join('/');
 
@@ -326,14 +325,14 @@
 		};
 
 		// posix version
-		exports.isAbsolute = function(path) {
+		exports.isAbsolute = function (path) {
 		  return path.charAt(0) === '/';
 		};
 
 		// posix version
-		exports.join = function() {
+		exports.join = function () {
 		  var paths = Array.prototype.slice.call(arguments, 0);
-		  return exports.normalize(filter(paths, function(p, index) {
+		  return exports.normalize(filter(paths, function (p, index) {
 		    if (typeof p !== 'string') {
 		      throw new TypeError('Arguments to path.join must be strings');
 		    }
@@ -341,10 +340,9 @@
 		  }).join('/'));
 		};
 
-
 		// path.relative(from, to)
 		// posix version
-		exports.relative = function(from, to) {
+		exports.relative = function (from, to) {
 		  from = exports.resolve(from).substr(1);
 		  to = exports.resolve(to).substr(1);
 
@@ -388,7 +386,7 @@
 		exports.sep = '/';
 		exports.delimiter = ':';
 
-		exports.dirname = function(path) {
+		exports.dirname = function (path) {
 		  var result = splitPath(path),
 		      root = result[0],
 		      dir = result[1];
@@ -406,8 +404,7 @@
 		  return root + dir;
 		};
 
-
-		exports.basename = function(path, ext) {
+		exports.basename = function (path, ext) {
 		  var f = splitPath(path)[2];
 		  // TODO: make this comparison case-insensitive on windows?
 		  if (ext && f.substr(-1 * ext.length) === ext) {
@@ -416,34 +413,33 @@
 		  return f;
 		};
 
-
-		exports.extname = function(path) {
+		exports.extname = function (path) {
 		  return splitPath(path)[3];
 		};
 
-		function filter (xs, f) {
-		    if (xs.filter) return xs.filter(f);
-		    var res = [];
-		    for (var i = 0; i < xs.length; i++) {
-		        if (f(xs[i], i, xs)) res.push(xs[i]);
-		    }
-		    return res;
+		function filter(xs, f) {
+		  if (xs.filter) return xs.filter(f);
+		  var res = [];
+		  for (var i = 0; i < xs.length; i++) {
+		    if (f(xs[i], i, xs)) res.push(xs[i]);
+		  }
+		  return res;
 		}
 
 		// String.prototype.substr - negative index don't work in IE8
-		var substr = 'ab'.substr(-1) === 'b'
-		    ? function (str, start, len) { return str.substr(start, len) }
-		    : function (str, start, len) {
-		        if (start < 0) start = str.length + start;
-		        return str.substr(start, len);
-		    }
-		;
-
+		var substr = 'ab'.substr(-1) === 'b' ? function (str, start, len) {
+		  return str.substr(start, len);
+		} : function (str, start, len) {
+		  if (start < 0) start = str.length + start;
+		  return str.substr(start, len);
+		};
 		/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 	/***/ },
 	/* 3 */
 	/***/ function(module, exports) {
+
+		'use strict';
 
 		// shim for using process in browser
 
@@ -473,7 +469,7 @@
 		    draining = true;
 
 		    var len = queue.length;
-		    while(len) {
+		    while (len) {
 		        currentQueue = queue;
 		        queue = [];
 		        while (++queueIndex < len) {
@@ -531,55 +527,54 @@
 		    throw new Error('process.binding is not supported');
 		};
 
-		process.cwd = function () { return '/' };
+		process.cwd = function () {
+		    return '/';
+		};
 		process.chdir = function (dir) {
 		    throw new Error('process.chdir is not supported');
 		};
-		process.umask = function() { return 0; };
-
+		process.umask = function () {
+		    return 0;
+		};
 
 	/***/ },
 	/* 4 */
-	/***/ function(module, exports) {
+	/***/ function(module, exports, __webpack_require__) {
 
-		'use strict';
+		/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-		let compare = (input, symbol) => {
-		  for(let key in symbol) {
-		    if(input[key] == undefined || typeof(input[key]) != typeof(symbol[key]))
-		      return false;
+		function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+		var compare = function compare(input, symbol) {
+		  for (var key in symbol) {
+		    if (input[key] == undefined || _typeof(input[key]) != _typeof(symbol[key])) return false;
 		  }
 		  return true;
-		}
+		};
 
-		let reSort = (input, symbolData, arraySymbol, symbol) => {
-		  if(!compare(input, symbol)) {
-		    if(typeof(input) == "object") {
-		      for(let key in input) {
-		        if(symbol.path != undefined && symbol.path == key) {
+		var reSort = function reSort(input, symbolData, arraySymbol, symbol) {
+		  if (!compare(input, symbol)) {
+		    if ((typeof input === "undefined" ? "undefined" : _typeof(input)) == "object") {
+		      for (var key in input) {
+		        if (symbol.path != undefined && symbol.path == key) {
 		          symbolData[key] = input[key];
-		        }
-		        else if(symbol.lat == key) {
+		        } else if (symbol.lat == key) {
 		          symbolData[key] = input[key];
-		        }
-		        else if(symbol.lon == key) {
+		        } else if (symbol.lon == key) {
 		          symbolData[key] = input[key];
-		        }
-		        else {
+		        } else {
 		          reSort(input[key], symbolData, arraySymbol, symbol);
-		          if(typeof(input[key]) != "object") {
-		            if(symbolData[key] == undefined) {
+		          if (_typeof(input[key]) != "object") {
+		            if (symbolData[key] == undefined) {
 		              symbolData[key] = input[key];
-		            }
-		            else {
-		              if(typeof(symbolData[key]) == "object") {
-		                let temp = {};
+		            } else {
+		              if (_typeof(symbolData[key]) == "object") {
+		                var temp = {};
 		                temp[key] = input[key];
 		                symbolData[key].push(temp);
-		              }   
-		              else {
-		                let temp1 = {};
-		                let temp2 = {};
+		              } else {
+		                var temp1 = {};
+		                var temp2 = {};
 		                temp1[key] = symbolData[key];
 		                temp2[key] = input[key];
 		                symbolData[key] = [];
@@ -591,41 +586,34 @@
 		        }
 		      }
 		    }
-		  }
-		  else {
+		  } else {
 		    arraySymbol.push(input);
 		  }
-		}
+		};
 
-		let combine = (tempSymbol, symbolData, symbol) => {
-		  for(let key in tempSymbol) {
-		    if(typeof(tempSymbol[key]) == "object") {
-		      if(symbol.path != undefined && symbol.path == key) {
+		var combine = function combine(tempSymbol, symbolData, symbol) {
+		  for (var key in tempSymbol) {
+		    if (_typeof(tempSymbol[key]) == "object") {
+		      if (symbol.path != undefined && symbol.path == key) {
 		        symbolData[key] = tempSymbol[key];
-		      }
-		      else if(symbol.lon == key) {
+		      } else if (symbol.lon == key) {
 		        symbolData[key] = tempSymbol[key];
-		      }
-		      else if(symbol.lat == key) {
+		      } else if (symbol.lat == key) {
 		        symbolData[key] = tempSymbol[key];
-		      }
-		      else {
+		      } else {
 		        combine(tempSymbol[key], symbolData);
 		      }
-		    }
-		    else {
-		      if(symbolData[key] == undefined) {
+		    } else {
+		      if (symbolData[key] == undefined) {
 		        symbolData[key] = tempSymbol[key];
-		      }
-		      else {
-		        if(typeof(symbolData[key]) == "object") {
-		          let temp = {};
+		      } else {
+		        if (_typeof(symbolData[key]) == "object") {
+		          var temp = {};
 		          temp[key] = tempSymbol[key];
 		          symbolData[key].push(temp);
-		        }
-		        else {
-		          let temp1 = {};
-		          let temp2 = {};
+		        } else {
+		          var temp1 = {};
+		          var temp2 = {};
 		          temp1[key] = symbolData[key];
 		          temp2[key] = tempSymbol[key];
 		          symbolData[key] = [];
@@ -635,55 +623,44 @@
 		      }
 		    }
 		  }
-		}
+		};
 
-		let findSymbol = (input, output, symbol) => {
-		  for(let key in input) {
-		    if(typeof(input[key]) == "object") {
-		      if(symbol.path != undefined && symbol.path == key) {
-		        for(let pId in input[key]) {
+		var findSymbol = function findSymbol(input, output, symbol) {
+		  for (var key in input) {
+		    if (_typeof(input[key]) == "object") {
+		      if (symbol.path != undefined && symbol.path == key) {
+		        for (var pId in input[key]) {
 		          output.symbol.path.push(input[key][pId]);
 		        }
-		      }
-		      else if(symbol.lon == key) {
+		      } else if (symbol.lon == key) {
 		        output.symbol.lon = [];
-		        for(let lonId in input[key]) {
+		        for (var lonId in input[key]) {
 		          output.symbol.lon.push(input[key][lonId]);
 		        }
-		      }
-		      else if(symbol.lat == key) {
+		      } else if (symbol.lat == key) {
 		        output.symbol.lat = [];
-		        for(let latId in input[key]) {
+		        for (var latId in input[key]) {
 		          output.symbol.lat.push(input[key][latId]);
 		        }
-		      }
-		      else {
+		      } else {
 		        findSymbol(input[key], output, symbol);
 		      }
-		    }
-		    else {
-		      if(key == symbol.lon)
-		        output.symbol.lon = input[key];
-		      else if(key == symbol.lat)
-		        output.symbol.lat = input[key];
-		      else {
-		        if(symbol.include != undefined) {
-		          for(let includeKey in symbol.include) {
-		            if(key == includeKey) {
-		              output.data[ symbol.include[includeKey] ] = input[key];
+		    } else {
+		      if (key == symbol.lon) output.symbol.lon = input[key];else if (key == symbol.lat) output.symbol.lat = input[key];else {
+		        if (symbol.include != undefined) {
+		          for (var includeKey in symbol.include) {
+		            if (key == includeKey) {
+		              output.data[symbol.include[includeKey]] = input[key];
 		            }
 		          }
-		        }
-		        else {
-		          if(output.data[key] == undefined) {
+		        } else {
+		          if (output.data[key] == undefined) {
 		            output.data[key] = input[key];
-		          }
-			  else {
-		            if(typeof(output.data[key]) == "object") {
+		          } else {
+		            if (_typeof(output.data[key]) == "object") {
 		              output.data[key].push(input[key]);
-		            } 
-		            else {
-		              let tempValue = output.data[key];
+		            } else {
+		              var tempValue = output.data[key];
 		              output.data[key] = [];
 		              output.data[key].push(tempValue);
 		              output.data[key].push(input[key]);
@@ -693,10 +670,10 @@
 		      }
 		    }
 		  }
-		}
+		};
 
-		let makeTemplate = (data, type, coordinates) => {
-		  let template = { type: "Feature", geometry: {} };
+		var makeTemplate = function makeTemplate(data, type, coordinates) {
+		  var template = { type: "Feature", geometry: {} };
 		  data.data.lon = data.symbol.lon;
 		  data.data.lat = data.symbol.lat;
 
@@ -705,77 +682,74 @@
 		  template.properties = data.data;
 
 		  return template;
-		}
+		};
 
-		module.exports = (data, symbol, handle) => {
-		  if(handle != undefined) {
+		module.exports = function (data, symbol, handle) {
+		  if (handle != undefined) {
 		    handle(data);
 		  }
 
-		  let output = {
+		  var output = {
 		    "type": "FeatureCollection",
 		    "features": []
 		  };
 
-		  if(data[0] == undefined) {
-		    data = [ data ];
+		  if (data[0] == undefined) {
+		    data = [data];
 		  }
 
-		  if((symbol.path == undefined && symbol.lon == undefined && symbol.lat == undefined )|| symbol.unit == undefined) {
+		  if (symbol.path == undefined && symbol.lon == undefined && symbol.lat == undefined || symbol.unit == undefined) {
 		    console.log("Error, ['lon', 'lat'] or ['path'] is needed and 'unit' is needed, too.");
 		    process.exit();
-		  } 
+		  }
 
-		  for(let itemId in data) {
-		    let item = data[itemId];
-		    let symbolData = {};
-		    let arraySymbol = [];
-		    reSort(item, symbolData, arraySymbol, symbol.unit); 
+		  for (var itemId in data) {
+		    var item = data[itemId];
+		    var symbolData = {};
+		    var arraySymbol = [];
+		    reSort(item, symbolData, arraySymbol, symbol.unit);
 
-		    for(let symbolId in arraySymbol) {
-		      let outputSymbol = { symbol: { lon: "", lat: "", path: [] }, data: {} };
-		      let tempSymbol = arraySymbol[symbolId];
-		      let tempSymbolData = JSON.parse(JSON.stringify(symbolData));
+		    for (var symbolId in arraySymbol) {
+		      var outputSymbol = { symbol: { lon: "", lat: "", path: [] }, data: {} };
+		      var tempSymbol = arraySymbol[symbolId];
+		      var tempSymbolData = JSON.parse(JSON.stringify(symbolData));
 
 		      combine(tempSymbol, tempSymbolData, symbol);
 		      findSymbol(tempSymbolData, outputSymbol, symbol);
 
-		      if(outputSymbol.symbol.path.length == 0) {
+		      if (outputSymbol.symbol.path.length == 0) {
 		        outputSymbol.data.lon = outputSymbol.symbol.lon;
 		        outputSymbol.data.lat = outputSymbol.symbol.lat;
-		        if(typeof(outputSymbol.symbol.lon) == "object" && typeof(outputSymbol.symbol.lat) == "object") {
-		          for(let id in outputSymbol.symbol.lon) {
-		            output.features.push( makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]) );
+		        if (_typeof(outputSymbol.symbol.lon) == "object" && _typeof(outputSymbol.symbol.lat) == "object") {
+		          for (var id in outputSymbol.symbol.lon) {
+		            output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]));
 		          }
+		        } else {
+		          output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]));
 		        }
-		        else {
-		          output.features.push( makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]) );
-		        }
-		      }
-		      else {
-		        if(outputSymbol.symbol.lon != "" && outputSymbol.symbol.lat != "") {
+		      } else {
+		        if (outputSymbol.symbol.lon != "" && outputSymbol.symbol.lat != "") {
 		          outputSymbol.data.lon = outputSymbol.symbol.lon;
 		          outputSymbol.data.lat = outputSymbol.symbol.lat;
-		          if(typeof(outputSymbol.symbol.lon) == "object" && typeof(outputSymbol.symbol.lat) == "object") {
-		            for(let id in outputSymbol.symbol.lon) {
-		              output.features.push( makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]) );
+		          if (_typeof(outputSymbol.symbol.lon) == "object" && _typeof(outputSymbol.symbol.lat) == "object") {
+		            for (var id in outputSymbol.symbol.lon) {
+		              output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon[id]), parseFloat(outputSymbol.symbol.lat[id])]));
 		            }
-		          }
-		          else {
-		            output.features.push( makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]) );
+		          } else {
+		            output.features.push(makeTemplate(outputSymbol, "Point", [parseFloat(outputSymbol.symbol.lon), parseFloat(outputSymbol.symbol.lat)]));
 		          }
 		        }
 
 		        outputSymbol.data.path = outputSymbol.symbol.path;
-		        let type = (typeof(outputSymbol.symbol.path[0][0]) == "object") ? "Polygon" : "LineString";
-		        output.features.push( makeTemplate(outputSymbol, type, outputSymbol.symbol.path) );
+		        var type = _typeof(outputSymbol.symbol.path[0][0]) == "object" ? "Polygon" : "LineString";
+		        output.features.push(makeTemplate(outputSymbol, type, outputSymbol.symbol.path));
 		      }
 		    }
 		  }
 
 		  return output;
-		}
-
+		};
+		/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 	/***/ },
 	/* 5 */
@@ -783,57 +757,54 @@
 
 		'use strict';
 
-		let csv2json = (data) => {
-		  let lines = data.split(/\r\n|\n/);
-		  let keys = [];
-		  let output = [];
-		  for(let lineId in lines) {
-		    let line = lines[lineId].split(/,/);
-		    if(line == "" || line == undefined) {
+		var csv2json = function csv2json(data) {
+		  var lines = data.split(/\r\n|\n/);
+		  var keys = [];
+		  var output = [];
+		  for (var lineId in lines) {
+		    var line = lines[lineId].split(/,/);
+		    if (line == "" || line == undefined) {
 		      continue;
-		    }
-		    else if(lineId == 0) {
-		      for(let key in line) {
+		    } else if (lineId == 0) {
+		      for (var key in line) {
 		        keys.push(line[key]);
 		      }
-		    }
-		    else {
-		      let item = {};
-		      for(let key in line) {
-		        item[ keys[key] ] = line[key];
+		    } else {
+		      var item = {};
+		      for (var key in line) {
+		        item[keys[key]] = line[key];
 		      }
 		      output.push(item);
 		    }
 		  }
 
 		  return output;
-		}
+		};
 
-		module.exports = (data, symbol, handle) => {
-		  if(handle != undefined) {
+		module.exports = function (data, symbol, handle) {
+		  if (handle != undefined) {
 		    handle(data);
 		  }
-		  
-		  let output = { "type": "FeatureCollection", "features": [] };
-		  let files = csv2json(data);
-		  for(let id in files) {
-		    let file = files[id];
-		    let lon = parseFloat(file[ symbol.lon ]);
-		    let lat = parseFloat(file[ symbol.lat ]);
 
-		    let properties = {};
-		    if(symbol.include != undefined) {
-		      for(let includeKey in symbol.include) {
-		        properties[ symbol.include[includeKey] ] = file[ includeKey ]
+		  var output = { "type": "FeatureCollection", "features": [] };
+		  var files = csv2json(data);
+		  for (var id in files) {
+		    var file = files[id];
+		    var lon = parseFloat(file[symbol.lon]);
+		    var lat = parseFloat(file[symbol.lat]);
+
+		    var properties = {};
+		    if (symbol.include != undefined) {
+		      for (var includeKey in symbol.include) {
+		        properties[symbol.include[includeKey]] = file[includeKey];
+		      }
+		    } else {
+		      for (var item in file) {
+		        properties[item] = file[item];
 		      }
 		    }
-		    else {
-		      for(let item in file) {
-		        properties[ item ] = file[item];
-		      }
-		    }
 
-		    let template = {
+		    var template = {
 		      type: "Feature",
 		      geometry: {
 		        "type": "Point",
@@ -841,12 +812,11 @@
 		      },
 		      "properties": properties
 		    };
-		    
+
 		    output.features.push(template);
 		  }
 		  return output;
-		}
-
+		};
 
 	/***/ },
 	/* 6 */
@@ -854,15 +824,15 @@
 
 		'use strict';
 
-		let path = __webpack_require__(2);
+		var path = __webpack_require__(2);
 
-		let Init = __webpack_require__(7);
-		let Reset = __webpack_require__(8).resetView;
-		let Set = __webpack_require__(8).setPlace;
-		let Add = __webpack_require__(9);
+		var Init = __webpack_require__(7);
+		var Reset = __webpack_require__(8).resetView;
+		var Set = __webpack_require__(8).setPlace;
+		var Add = __webpack_require__(9);
 
-		module.exports = (Config) => {
-		  let html = '<div class="simple-map-button">';
+		module.exports = function (Config) {
+		  var html = '<div class="simple-map-button">';
 		  html += '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-reset">';
 		  html += '<i class="material-icons">refresh</i>';
 		  html += '</button>';
@@ -871,23 +841,24 @@
 		  html += '</button>';
 		  html += '</div>';
 
-		  $('#' + Config.simple.id)
-		    .addClass('simple-map')
-		    .html(html);
-		  let map = Init(Config.simple.id, Config.simple.center);
-		  let outputPath = path.join(Config.output.path, Config.output.filename);
+		  $('#' + Config.simple.id).addClass('simple-map').html(html);
+		  var map = Init(Config.simple.id, Config.simple.center);
+		  var outputPath = path.join(Config.output.path, Config.output.filename);
 		  Add(map, outputPath, Config.simple.include);
 
-		  let reset = {
+		  var reset = {
 		    lat: Config.simple.center.lat,
 		    lon: Config.simple.center.lon,
 		    zoom: Config.simple.center.zoom.normal
 		  };
 
-		  $(".simple-map-reset").click(() => { Reset(map, reset); });
-		  $(".simple-map-set").click(() => { Set(map); });
-		}
-
+		  $(".simple-map-reset").click(function () {
+		    Reset(map, reset);
+		  });
+		  $(".simple-map-set").click(function () {
+		    Set(map);
+		  });
+		};
 
 	/***/ },
 	/* 7 */
@@ -895,42 +866,41 @@
 
 		'use strict';
 
-		module.exports = (id, center) => {
-		  if(center.zoom == undefined) {
+		function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+		module.exports = function (id, center) {
+		  if (center.zoom == undefined) {
+		    center.zoom = {};
+		  } else if (_typeof(center.zoom) != "object") {
 		    center.zoom = {};
 		  }
-		  else if(typeof(center.zoom) != "object") {
-		    center.zoom = {};
-		  }
-		  if(center.zoom.normal == undefined) {
+		  if (center.zoom.normal == undefined) {
 		    center.zoom.normal = 8;
 		  }
-		  if(center.zoom.min == undefined) {
+		  if (center.zoom.min == undefined) {
 		    center.zoom.min = 1;
 		  }
-		  if(center.zoom.max == undefined) {
+		  if (center.zoom.max == undefined) {
 		    center.zoom.max = 17;
 		  }
-		  if(parseInt(center.zoom.min) < 1 || parseInt(center.zoom.min) > 17) {
+		  if (parseInt(center.zoom.min) < 1 || parseInt(center.zoom.min) > 17) {
 		    center.zoom.min = 1;
 		  }
-		  if(parseInt(center.zoom.max) < 1 || parseInt(center.zoom.max) > 17) {
+		  if (parseInt(center.zoom.max) < 1 || parseInt(center.zoom.max) > 17) {
 		    center.zoom.max = 17;
 		  }
-		  if(parseInt(center.zoom.normal) < 1 || parseInt(center.zoom.normal) > 17) {
+		  if (parseInt(center.zoom.normal) < 1 || parseInt(center.zoom.normal) > 17) {
 		    center.zoom.normal = 8;
 		  }
-		  if(center.zoom.min < center.zoom.normal && center.zoom.max > center.zoom.normal) {
-		  }
-		  else {
+		  if (center.zoom.min < center.zoom.normal && center.zoom.max > center.zoom.normal) {} else {
 		    center.zoom.normal = center.zoom.max;
 		  }
-		  if(id == undefined) {
+		  if (id == undefined) {
 		    id = "map";
 		    $("#map").addClass('simple-map');
 		  }
 
-		  let map = L.map(id).setView(new L.LatLng(center.lat, center.lon), center.zoom.normal);
+		  var map = L.map(id).setView(new L.LatLng(center.lat, center.lon), center.zoom.normal);
 
 		  L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
 		    maxZoom: center.zoom.max,
@@ -941,8 +911,7 @@
 		  }).addTo(map);
 
 		  return map;
-		}
-
+		};
 
 	/***/ },
 	/* 8 */
@@ -950,8 +919,8 @@
 
 		'use strict';
 
-		let Button = {};
-		Button.setPlace = (map) => {
+		var Button = {};
+		Button.setPlace = function (map) {
 		  function setPosition(position) {
 		    map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 12);
 		  };
@@ -959,14 +928,13 @@
 		  if (navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition(setPosition);
 		  }
-		}
+		};
 
-		Button.resetView = (map, center) => {
+		Button.resetView = function (map, center) {
 		  map.setView(new L.LatLng(center.lat, center.lon), center.zoom);
 		};
 
 		module.exports = Button;
-
 
 	/***/ },
 	/* 9 */
@@ -974,74 +942,72 @@
 
 		'use strict';
 
-		let add = (map, data, file) => {
+		var add = function add(map, data, file) {
 		  L.geoJson(data, {
-		    onEachFeature(feature, layer) {
-		      let html = ""; 
+		    onEachFeature: function onEachFeature(feature, layer) {
+		      var html = "";
 
-		      if(file.title == undefined && file.content == undefined) {
-		        for(let key in feature.properties) {
+		      if (file.title == undefined && file.content == undefined) {
+		        for (var key in feature.properties) {
 		          html += "<font class='content'>" + key + "： " + feature.properties[key] + "</font><br/>";
-		        }   
-		        layer.bindPopup(html);
-		      }
-		      else {
-		        for(let key in file.title) {
-		          html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>"
-		        }
-		        for(let key in file.content) {
-		          html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>"
 		        }
 		        layer.bindPopup(html);
+		      } else {
+		        for (var key in file.title) {
+		          html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>";
+		        }
+		        for (var key in file.content) {
+		          html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>";
+		        }
+		        layer.bindPopup(html);
 		      }
-		    },  
-		    pointToLayer(feature, point) {
-		      if(file.point == undefined) {
+		    },
+		    pointToLayer: function pointToLayer(feature, point) {
+		      if (file.point == undefined) {
 		        return L.marker(point);
-		      }
-		      else {
-		        let icon = file.point(feature.properties, point);
-		        if(icon != undefined) { 
+		      } else {
+		        var icon = file.point(feature.properties, point);
+		        if (icon != undefined) {
 		          return icon;
-		        }
-		        else {
+		        } else {
 		          return L.marker(point);
 		        }
 		      }
 		    },
-		    filter: function(feature, layer) {
-		      if(file.filter != undefined) {
+
+		    filter: function filter(feature, layer) {
+		      if (file.filter != undefined) {
 		        return file.filter(feature.properties);
-		      }
-		      else {
+		      } else {
 		        return true;
 		      }
 		    }
 		  }).addTo(map);
-		}
+		};
 
-		module.exports = (map, path, files) => {
-		  for(let i in files) {
-		    let fileName = Object.keys(files[i])[0];
-		    let file = files[i][fileName];
-		    if(path == undefined) {
+		module.exports = function (map, path, files) {
+		  for (var i in files) {
+		    var fileName = Object.keys(files[i])[0];
+		    var file = files[i][fileName];
+		    if (path == undefined) {
 		      add(map, file.data, file);
-		    }
-		    else {
-		      let fileName = Object.keys(files[i])[0];
-		      let url = path.replace('[name]', fileName);
-		      let file = files[i][fileName];
+		    } else {
+		      (function () {
+		        var fileName = Object.keys(files[i])[0];
+		        var url = path.replace('[name]', fileName);
+		        var file = files[i][fileName];
 
-		      $.getJSON(url, (data) => {
-		        add(map, data, file);
-		      });
+		        $.getJSON(url, function (data) {
+		          add(map, data, file);
+		        });
+		      })();
 		    }
 		  }
-		}
-
+		};
 
 	/***/ }
 	/******/ ]);
+
 
 /***/ }
 /******/ ]);
