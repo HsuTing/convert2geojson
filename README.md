@@ -89,6 +89,7 @@ var config = require('./convert2geojson.config.js');
 })();
 ```
 - You can see other function in [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).
+- [Example and demo](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon#example-code).
 
 ## Input and Output Example
 
