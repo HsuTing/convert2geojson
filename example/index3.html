@@ -47,9 +47,6 @@
         width: 300px;
         z-index: 10;
       }
-      .simple-map-input .mdl-card {
-        min-height: 100px;
-      }
     </style>
   </head>
 
@@ -65,15 +62,28 @@
         </button>
 
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--2dp simple-map-data">
-          <i class="material-icons">folder</i>
+          <i class="material-icons">link</i>
         </button>
       </div>
       <div class="simple-map-input">
         <div class="mdl-card mdl-shadow--2dp">
           <div class="mdl-card__supporting-text">
+            <p>This is simple example. If you want to try, you can use <a href="https://raw.githubusercontent.com/HsuTing/convert2geojson/gh-pages/example/data/data.json" target="_blank">data.json</a>. Notice: If your data is not under a same domain, it will get an error about 'Access-Control-Allow-Origin'.</p>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="data-lon">
+              <label class="mdl-textfield__label" for="data-lon">Longitude`s name</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="data-lat">
+              <label class="mdl-textfield__label" for="data-lat">Latitude`s name</label>
+            </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="data-url">
               <label class="mdl-textfield__label" for="data-url">Data`s url</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="data-type">
+              <label class="mdl-textfield__label" for="data-type">Data`s type</label>
             </div>
           </div>
         </div>
