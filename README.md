@@ -16,7 +16,7 @@ module.exports = {
   input: [
     {'try': {
       url: './input/test.json',
-      symbol: {lon: 'Longitude', lat: 'Latitude', unit: { Village: "Village" }}
+      symbol: {lon: 'Longitude', lat: 'Latitude', unit: { }}
     }},
     {'temp': {
       url: './input/test.csv',
