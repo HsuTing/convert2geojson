@@ -582,7 +582,7 @@
 		      } else if (symbol.lat == key) {
 		        symbolData[key] = tempSymbol[key];
 		      } else {
-		        combine(tempSymbol[key], symbolData);
+		        combine(tempSymbol[key], symbolData, symbol);
 		      }
 		    } else {
 		      if (symbolData[key] == undefined) {
@@ -988,7 +988,6 @@
 
 	/***/ }
 	/******/ ]);
-
 
 /***/ }
 /******/ ]);
