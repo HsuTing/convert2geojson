@@ -91,6 +91,39 @@ var config = require('./convert2geojson.config.js');
 - You can see other function in [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).
 - [Example and demo](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon#example-code).
 
+## Use convert2geojson in html
+
+```
+  <script src="./../convert2geojson-src.min.js"></script>
+  <script>
+    var config = {
+      output: {
+        filename: '[name].geojson',
+        path: './data/'
+      },
+      simple: {
+        id: "map",
+        center: {
+          lat: 23.619, 
+          lon: 120.795,
+          zoom: {
+            normal: 10,
+            min: 1,
+            max: 17
+          }
+        },
+        include: [
+          {'data': {}}
+        ]
+      }
+    }
+
+    convert2geojson.Map(config);
+  </script>
+```
+- [code](https://github.com/HsuTing/convert2geojson/blob/gh-pages/example/use-src.html) -> [demo](http://hsuting.github.io/convert2geojson/example/use-src.html)
+- [convert2geojson-src.min.js](https://raw.githubusercontent.com/HsuTing/convert2geojson/master/convert2geojson-src.min.js)
+
 ## Input and Output Example
 
 - [json](https://github.com/HsuTing/convert2geojson/wiki#json)
