@@ -121,7 +121,8 @@ var config = require('./convert2geojson.config.js');
     convert2geojson.Map(config);
   </script>
 ```
-- [Code](https://github.com/HsuTing/convert2geojson/blob/gh-pages/example/use-src.html) -> [demp](http://hsuting.github.io/convert2geojson/example/use-src.html)
+- [code](https://github.com/HsuTing/convert2geojson/blob/gh-pages/example/use-src.html) -> [demo](http://hsuting.github.io/convert2geojson/example/use-src.html)
+- [convert2geojson-src.min.js](https://raw.githubusercontent.com/HsuTing/convert2geojson/master/convert2geojson-src.min.js)
 
 ## Input and Output Example
 
