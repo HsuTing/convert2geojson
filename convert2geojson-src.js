@@ -1,4 +1,4 @@
-module.exports =
+var convert2geojson =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
