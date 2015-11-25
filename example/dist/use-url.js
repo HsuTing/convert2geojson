@@ -907,129 +907,127 @@
 		"use strict";
 
 		var add = function add(map, data, file, filename) {
-		  map.on("style.load", function () {
-		    map.addSource(filename, {
-		      "type": "geojson",
-		      "data": data
+		  map.addSource(filename, {
+		    "type": "geojson",
+		    "data": data
+		  });
+
+		  var style = {
+		    polygon: {
+		      visible: true,
+		      style: {
+		        "fill-color": "blue",
+		        "fill-opacity": 0.5
+		      },
+		      info: true,
+		      filter: ["all"]
+		    },
+		    line: {
+		      visible: true,
+		      style: {
+		        "line-color": "blue",
+		        "line-width": 8
+		      },
+		      info: true,
+		      filter: ["all"]
+		    },
+		    circle: {
+		      visible: false,
+		      style: {
+		        "circle-radius": 10,
+		        "circle-color": "blue",
+		        "circle-blur": 1
+		      },
+		      info: true,
+		      filter: ["all"]
+		    },
+		    icon: {
+		      visible: true,
+		      style: {
+		        "icon-image": "marker-15"
+		      },
+		      info: true,
+		      filter: ["all"]
+		    }
+		  };
+
+		  for (var key in file.style) {
+		    for (var item in file.style[key]) {
+		      style[key][item] = file.style[key][item];
+		    }
+		  }
+
+		  if (style.polygon.visible) {
+		    map.addLayer({
+		      "id": filename + "-polygon",
+		      "type": "fill",
+		      "source": filename,
+		      "paint": style.polygon.style,
+		      "interactive": style.polygon.info,
+		      "filter": style.polygon.filter
 		    });
+		  }
 
-		    var style = {
-		      polygon: {
-		        visible: true,
-		        style: {
-		          "fill-color": "blue",
-		          "fill-opacity": 0.5
-		        },
-		        info: true,
-		        filter: ["all"]
+		  if (style.line.visible) {
+		    map.addLayer({
+		      "id": filename + "-line",
+		      "type": "line",
+		      "source": filename,
+		      "layout": {
+		        "line-join": "round",
+		        "line-cap": "round"
 		      },
-		      line: {
-		        visible: true,
-		        style: {
-		          "line-color": "blue",
-		          "line-width": 8
-		        },
-		        info: true,
-		        filter: ["all"]
-		      },
-		      circle: {
-		        visible: false,
-		        style: {
-		          "circle-radius": 10,
-		          "circle-color": "blue",
-		          "circle-blur": 1
-		        },
-		        info: true,
-		        filter: ["all"]
-		      },
-		      icon: {
-		        visible: true,
-		        style: {
-		          "icon-image": "marker-15"
-		        },
-		        info: true,
-		        filter: ["all"]
+		      "paint": style.line.style,
+		      "interactive": style.line.info,
+		      "filter": style.line.filter
+		    });
+		  }
+
+		  if (style.circle.visible) {
+		    map.addLayer({
+		      "id": filename + "-circle",
+		      "type": "circle",
+		      "source": filename,
+		      "paint": style.circle.style,
+		      "interactive": style.circle.info,
+		      "filter": style.circle.filter
+		    });
+		  }
+
+		  if (style.icon.visible) {
+		    map.addLayer({
+		      "id": filename + "-symbol",
+		      "type": "symbol",
+		      "source": filename,
+		      "layout": style.icon.style,
+		      "interactive": style.icon.info,
+		      "filter": style.icon.filter
+		    });
+		  }
+
+		  map.on('click', function (e) {
+		    map.featuresAt(e.point, { radius: 5 }, function (err, features) {
+		      if (features.length == 0) {
+		        return;
 		      }
-		    };
 
-		    for (var key in file.style) {
-		      for (var item in file.style[key]) {
-		        style[key][item] = file.style[key][item];
+		      var html = "";
+		      var info = features[0].properties;
+
+		      if (file.title == undefined && file.content == undefined) {
+		        for (var key in info) {
+		          html += "<font class='content'>" + key + "： " + info[key] + "</font><br/>";
+		        }
+		      } else {
+		        for (var key in file.title) {
+		          html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
+		        }
+		        for (var key in file.content) {
+		          html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
+		        }
 		      }
-		    }
 
-		    if (style.polygon.visible) {
-		      map.addLayer({
-		        "id": filename + "-polygon",
-		        "type": "fill",
-		        "source": filename,
-		        "paint": style.polygon.style,
-		        "interactive": style.polygon.info,
-		        "filter": style.polygon.filter
-		      });
-		    }
-
-		    if (style.line.visible) {
-		      map.addLayer({
-		        "id": filename + "-line",
-		        "type": "line",
-		        "source": filename,
-		        "layout": {
-		          "line-join": "round",
-		          "line-cap": "round"
-		        },
-		        "paint": style.line.style,
-		        "interactive": style.line.info,
-		        "filter": style.line.filter
-		      });
-		    }
-
-		    if (style.circle.visible) {
-		      map.addLayer({
-		        "id": filename + "-circle",
-		        "type": "circle",
-		        "source": filename,
-		        "paint": style.circle.style,
-		        "interactive": style.circle.info,
-		        "filter": style.circle.filter
-		      });
-		    }
-
-		    if (style.icon.visible) {
-		      map.addLayer({
-		        "id": filename + "-symbol",
-		        "type": "symbol",
-		        "source": filename,
-		        "layout": style.icon.style,
-		        "interactive": style.icon.info,
-		        "filter": style.icon.filter
-		      });
-		    }
-
-		    map.on('click', function (e) {
-		      map.featuresAt(e.point, { radius: 5 }, function (err, features) {
-		        if (features.length == 0) {
-		          return;
-		        }
-
-		        var html = "";
-		        var info = features[0].properties;
-
-		        if (file.title == undefined && file.content == undefined) {
-		          for (var key in info) {
-		            html += "<font class='content'>" + key + "： " + info[key] + "</font><br/>";
-		          }
-		        } else {
-		          for (var key in file.title) {
-		            html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
-		          }
-		          for (var key in file.content) {
-		            html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
-		          }
-		        }
-
-		        new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(html).addTo(map);
-		      });
+		      new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(html).addTo(map);
 		    });
 		  });
 		};
@@ -1056,6 +1054,7 @@
 
 	/***/ }
 	/******/ ]);
+
 
 /***/ }
 /******/ ]);
