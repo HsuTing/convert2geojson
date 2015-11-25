@@ -15,11 +15,7 @@ import convert2geojson from 'convert2geojson';
   let map = convert2geojson.Init("map", {
     lat: 23.619, 
     lon: 120.795,
-    zoom: {
-      normal: 8, 
-      min: 1,
-      max: 17
-    }
+    zoom: 7
   });
 
 /*

@@ -8,11 +8,7 @@ module.exports = {
     center: {
       lat: 23.619, 
       lon: 120.795,
-      zoom: {
-        normal: 10,
-        min: 1,
-        max: 17
-      }
+      zoom: 7
     },
     include: [
       {'data': {}}

@@ -791,14 +791,8 @@
 		  var outputPath = path.join(Config.output.path, Config.output.filename);
 		  Add(map, outputPath, Config.simple.include);
 
-		  var reset = {
-		    lat: Config.simple.center.lat,
-		    lon: Config.simple.center.lon,
-		    zoom: Config.simple.center.zoom.normal
-		  };
-
 		  $(".simple-map-reset").click(function () {
-		    Reset(map, reset);
+		    Reset(map, Config.simple.center);
 		  });
 		  $(".simple-map-set").click(function () {
 		    Set(map);
@@ -811,49 +805,23 @@
 
 		'use strict';
 
-		function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
 		module.exports = function (id, center) {
 		  if (center.zoom == undefined) {
-		    center.zoom = {};
-		  } else if (_typeof(center.zoom) != "object") {
-		    center.zoom = {};
-		  }
-		  if (center.zoom.normal == undefined) {
-		    center.zoom.normal = 8;
-		  }
-		  if (center.zoom.min == undefined) {
-		    center.zoom.min = 1;
-		  }
-		  if (center.zoom.max == undefined) {
-		    center.zoom.max = 17;
-		  }
-		  if (parseInt(center.zoom.min) < 1 || parseInt(center.zoom.min) > 17) {
-		    center.zoom.min = 1;
-		  }
-		  if (parseInt(center.zoom.max) < 1 || parseInt(center.zoom.max) > 17) {
-		    center.zoom.max = 17;
-		  }
-		  if (parseInt(center.zoom.normal) < 1 || parseInt(center.zoom.normal) > 17) {
-		    center.zoom.normal = 8;
-		  }
-		  if (center.zoom.min < center.zoom.normal && center.zoom.max > center.zoom.normal) {} else {
-		    center.zoom.normal = center.zoom.max;
+		    center.zoom = 7;
 		  }
 		  if (id == undefined) {
 		    id = "map";
 		    $("#map").addClass('simple-map');
 		  }
 
-		  var map = L.map(id).setView(new L.LatLng(center.lat, center.lon), center.zoom.normal);
-
-		  L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-		    maxZoom: center.zoom.max,
-		    minZoom: center.zoom.min,
-		    attribution: "Imagery from <a href=\"http://giscience.uni-hd.de/\">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
-		    id: "hsuting.o5ag6mm2",
-		    accessToken: "pk.eyJ1IjoiaHN1dGluZyIsImEiOiJRajF4Y0hjIn0.9UDt8uw_fxEX791Styd-lA"
-		  }).addTo(map);
+		  mapboxgl.accessToken = "pk.eyJ1IjoiaHN1dGluZyIsImEiOiJRajF4Y0hjIn0.9UDt8uw_fxEX791Styd-lA";
+		  var map = new mapboxgl.Map({
+		    container: id,
+		    style: 'mapbox://styles/mapbox/streets-v8',
+		    center: [center.lon, center.lat],
+		    zoom: center.zoom
+		  });
+		  map.addControl(new mapboxgl.Navigation());
 
 		  return map;
 		};
@@ -867,7 +835,7 @@
 		var Button = {};
 		Button.setPlace = function (map) {
 		  function setPosition(position) {
-		    map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 12);
+		    map.flyTo({ center: [position.coords.longitude, position.coords.latitude], zoom: 12 });
 		  };
 
 		  if (navigator.geolocation) {
@@ -876,7 +844,7 @@
 		};
 
 		Button.resetView = function (map, center) {
-		  map.setView(new L.LatLng(center.lat, center.lon), center.zoom);
+		  map.flyTo({ center: [center.lon, center.lat], zoom: center.zoom });
 		};
 
 		module.exports = Button;
@@ -885,49 +853,134 @@
 	/* 9 */
 	/***/ function(module, exports) {
 
-		'use strict';
+		"use strict";
 
-		var add = function add(map, data, file) {
-		  L.geoJson(data, {
-		    onEachFeature: function onEachFeature(feature, layer) {
-		      var html = "";
+		var add = function add(map, data, file, filename) {
+		  map.on("style.load", function () {
+		    map.addSource(filename, {
+		      "type": "geojson",
+		      "data": data
+		    });
 
-		      if (file.title == undefined && file.content == undefined) {
-		        for (var key in feature.properties) {
-		          html += "<font class='content'>" + key + "： " + feature.properties[key] + "</font><br/>";
-		        }
-		        layer.bindPopup(html);
-		      } else {
-		        for (var key in file.title) {
-		          html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>";
-		        }
-		        for (var key in file.content) {
-		          html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + feature.properties[key] + "</font><br/>";
-		        }
-		        layer.bindPopup(html);
+		    var style = {
+		      polygon: {
+		        visible: true,
+		        style: {
+		          "fill-color": "blue",
+		          "fill-opacity": 0.5
+		        },
+		        info: true,
+		        filter: ["all"]
+		      },
+		      line: {
+		        visible: true,
+		        style: {
+		          "line-color": "blue",
+		          "line-width": 8
+		        },
+		        info: true,
+		        filter: ["all"]
+		      },
+		      circle: {
+		        visible: false,
+		        style: {
+		          "circle-radius": 10,
+		          "circle-color": "blue",
+		          "circle-blur": 1
+		        },
+		        info: true,
+		        filter: ["all"]
+		      },
+		      icon: {
+		        visible: true,
+		        style: {
+		          "icon-image": "marker-15"
+		        },
+		        info: true,
+		        filter: ["all"]
 		      }
-		    },
-		    pointToLayer: function pointToLayer(feature, point) {
-		      if (file.point == undefined) {
-		        return L.marker(point);
-		      } else {
-		        var icon = file.point(feature.properties, point);
-		        if (icon != undefined) {
-		          return icon;
-		        } else {
-		          return L.marker(point);
-		        }
-		      }
-		    },
+		    };
 
-		    filter: function filter(feature, layer) {
-		      if (file.filter != undefined) {
-		        return file.filter(feature.properties);
-		      } else {
-		        return true;
+		    for (var key in file.style) {
+		      for (var item in file.style[key]) {
+		        style[key][item] = file.style[key][item];
 		      }
 		    }
-		  }).addTo(map);
+
+		    if (style.polygon.visible) {
+		      map.addLayer({
+		        "id": filename + "-polygon",
+		        "type": "fill",
+		        "source": filename,
+		        "paint": style.polygon.style,
+		        "interactive": style.polygon.info,
+		        "filter": style.polygon.filter
+		      });
+		    }
+
+		    if (style.line.visible) {
+		      map.addLayer({
+		        "id": filename + "-line",
+		        "type": "line",
+		        "source": filename,
+		        "layout": {
+		          "line-join": "round",
+		          "line-cap": "round"
+		        },
+		        "paint": style.line.style,
+		        "interactive": style.line.info,
+		        "filter": style.line.filter
+		      });
+		    }
+
+		    if (style.circle.visible) {
+		      map.addLayer({
+		        "id": filename + "-circle",
+		        "type": "circle",
+		        "source": filename,
+		        "paint": style.circle.style,
+		        "interactive": style.circle.info,
+		        "filter": style.circle.filter
+		      });
+		    }
+
+		    if (style.icon.visible) {
+		      map.addLayer({
+		        "id": filename + "-symbol",
+		        "type": "symbol",
+		        "source": filename,
+		        "layout": style.icon.style,
+		        "interactive": style.icon.info,
+		        "filter": style.icon.filter
+		      });
+		    }
+
+		    map.on('click', function (e) {
+		      map.featuresAt(e.point, { radius: 5 }, function (err, features) {
+		        if (features.length == 0) {
+		          return;
+		        }
+
+		        var html = "";
+		        var info = features[0].properties;
+
+		        if (file.title == undefined && file.content == undefined) {
+		          for (var key in info) {
+		            html += "<font class='content'>" + key + "： " + info[key] + "</font><br/>";
+		          }
+		        } else {
+		          for (var key in file.title) {
+		            html += "<font class='header'>" + file.title[key] + (file.title[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
+		          }
+		          for (var key in file.content) {
+		            html += "<font class='content'>" + file.content[key] + (file.content[key] == "" ? "" : "： ") + info[key] + "</font><br/>";
+		          }
+		        }
+
+		        new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(html).addTo(map);
+		      });
+		    });
+		  });
 		};
 
 		module.exports = function (map, path, files) {
@@ -935,15 +988,15 @@
 		    var fileName = Object.keys(files[i])[0];
 		    var file = files[i][fileName];
 		    if (path == undefined) {
-		      add(map, file.data, file);
+		      add(map, file.data, file, fileName);
 		    } else {
 		      (function () {
 		        var fileName = Object.keys(files[i])[0];
-		        var url = path.replace('[name]', fileName);
+		        var url = path.replace("[name]", fileName);
 		        var file = files[i][fileName];
 
 		        $.getJSON(url, function (data) {
-		          add(map, data, file);
+		          add(map, data, file, fileName);
 		        });
 		      })();
 		    }
@@ -967,11 +1020,7 @@
 	    center: {
 	      lat: 23.619, 
 	      lon: 120.795,
-	      zoom: {
-	        normal: 10,
-	        min: 1,
-	        max: 17
-	      }
+	      zoom: 7
 	    },
 	    include: [
 	      {'data': {}}
