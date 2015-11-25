@@ -77,7 +77,7 @@ module.exports = {
 
 ## Require convert2geojson
 
-- `jquery` and `mapbox gl` must be added to your program
+- `jquery` and `mapbox gl` must be added to your program.
 - If you require the function `Map`, you must add `material-design-lite` to your program.
 
 ```
@@ -106,11 +106,7 @@ var config = require('./convert2geojson.config.js');
         center: {
           lat: 23.619, 
           lon: 120.795,
-          zoom: {
-            normal: 10,
-            min: 1,
-            max: 17
-          }
+          zoom: 7
         },
         include: [
           {'data': {}}
