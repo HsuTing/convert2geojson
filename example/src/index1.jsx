@@ -37,7 +37,9 @@ import convert2geojson from 'convert2geojson';
   The second argument is the path for your files, form is (your path)/[name].(your file extension)
   The third argumet is add your data, and it need to be in array. You can see [https://github.com/HsuTing/convert2geojson/wiki/open-a-simple-map].
 */
-  convert2geojson.Add(map, "./data/[name].geojson", [
-    {'data': {}}
-  ]);
+  map.on("style.load", () => {
+    convert2geojson.Add(map, "./data/[name].geojson", [
+      {'data': {}}
+    ]);
+  });
 })();
