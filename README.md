@@ -2,7 +2,7 @@
 
 ## Install
 
-- You need to install [Node.js](https://nodejs.org/en/) (version >= 5.0.0).
+- [Node.js](https://nodejs.org/en/) (version >= 5.0.0) must be installed.
 
 ```
   npm install convert2geojson
@@ -10,13 +10,13 @@
 
 ## Convert to geosjon
 
-- You need a config.js whose name is `convert2geojson.config.js`
+- Config.js must be named `convert2geojson.config.js`
 ```
 module.exports = { 
   input: [
     {'try': {
       url: './input/test.json',
-      symbol: {lon: 'Longitude', lat: 'Latitude', unit: { Village: "Village" }}
+      symbol: {lon: 'Longitude', lat: 'Latitude', unit: { }}
     }},
     {'temp': {
       url: './input/test.csv',
@@ -29,24 +29,24 @@ module.exports = {
   }   
 }
 ```
-- `url` can be a path or a link. If it is a link, you need to add type after link. For example, if link is `http://example.com`, you should write `http://example.com!json`.
+- `url` can be a path or a link. If it is a link, you must add a format at the end. For example, `http://example.com` should be written as `http://example.com!json`.
 
-- Now, you can convert to geojosn.
+- Convert to geojosn with:
 ```
   ./node_modules/.bin/convert2geojson
 ```
 
-- You can see other settings in [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
-- You must see [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) at first time.
+- Other settings are listed here: [convert2geojson.config.js](https://github.com/HsuTing/convert2geojson/wiki/convert2geojson.config.js).
+- Read [Input and Output Example](https://github.com/HsuTing/convert2geojson#input-and-output-example) before first use.
 
-## Open simple map
+## Simple map
 
-- You need to install those.
+- The following must be installed:
 ```
   npm install express proxy-middleware webpack webpack-dev-server file-loader html-loader url-loader
 ```
 
-- You need a config.js whose name is `convert2geojson.config.js`
+- Config.js must be named `convert2geojson.config.js`
 ```
 module.exports = {
   output: {
@@ -66,19 +66,19 @@ module.exports = {
 }
 ```
 
-- Now, you can open a simple map.
+- A simple map can be created with:
 ```
   ./node_modules/.bin/convert2geojson -test
 ```
 
-- You can see your simple map at `http://localhost:9090/`.
-- You can see detail in [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
+- The map can be viewed at: `http://localhost:9090/`.
+- Other details are listed here: [open a simple map](https://github.com/HsuTing/convert2geojson/wiki/Open-a-simple-map).
 - [Demo](http://hsuting.github.io/convert2geojson/example/index2.html).
 
 ## Require convert2geojson
 
-- You need to add `jquery`, `leaflet` in your program.
-- If you use function `Map`, you need to add `material-design-lite` in your program.
+- `jquery` and `leaflet` must be added to your program
+- If you require the function `Map`, you must add `material-design-lite` to your program.
 
 ```
 var convert2geojson = require('convert2geojson');
@@ -88,10 +88,10 @@ var config = require('./convert2geojson.config.js');
   convert2geojson.Map(config);
 })();
 ```
-- You can see other function in [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).
+- Other functions are listed here: [require convert2geojson](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon).
 - [Example and demo](https://github.com/HsuTing/convert2geojson/wiki/require-convert2geosjon#example-code).
 
-## Use convert2geojson in html
+## Using convert2geojson in html
 
 ```
   <script src="./../convert2geojson-src.min.js"></script>
@@ -129,21 +129,21 @@ var config = require('./convert2geojson.config.js');
 - [json](https://github.com/HsuTing/convert2geojson/wiki#json)
 - [csv](https://github.com/HsuTing/convert2geojson/wiki#csv)
 
-## Feature
+## Features
 
-- [x] Convert every form to geojson.
+- [x] Convert every format to geojson.
 - [x] Can choose personal properties.
-- [x] File can be online or offline.
-- [x] File can be `json`, `csv`.
-- [x] Can open a simple map.
-- [x] Can filter data.
-- [x] Customize style in simple map.
-- [x] Can choose fields which should be included.
-- [x] Developer can add function before handling data.
+- [x] Files can be online or offline.
+- [x] Files can be `json` or `csv`.
+- [x] Filter data.
+- [x] Choose fields which should be included.
+- [x] Developers can add functions before handling data.
+- [x] Create a simple map.
+- [x] Customize map styles.
 
-## Issue
+## Issues
 
-- Can not compare `{}` and `[]`
+- Can not differentiate `{}` and `[]`
 
 ## License
 
