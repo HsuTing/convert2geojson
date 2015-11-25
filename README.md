@@ -77,7 +77,7 @@ module.exports = {
 
 ## Require convert2geojson
 
-- `jquery` and `leaflet` must be added to your program
+- `jquery` and `mapbox gl` must be added to your program
 - If you require the function `Map`, you must add `material-design-lite` to your program.
 
 ```
