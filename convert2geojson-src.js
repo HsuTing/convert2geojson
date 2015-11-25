@@ -723,7 +723,9 @@ var convert2geojson =
 	  $('#' + Config.simple.id).addClass('simple-map').html(html);
 	  var map = Init(Config.simple.id, Config.simple.center);
 	  var outputPath = path.join(Config.output.path, Config.output.filename);
-	  Add(map, outputPath, Config.simple.include);
+	  map.on('style.load', function () {
+	    Add(map, outputPath, Config.simple.include);
+	  });
 
 	  $(".simple-map-reset").click(function () {
 	    Reset(map, Config.simple.center);
